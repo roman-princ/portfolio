@@ -8,7 +8,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navigation = [
   { name: "About", href: "#about" },
+  { name: "Experience", href: "#experience" },
   { name: "Projects", href: "#projects" },
+  { name: "Certificates", href: "#certificates" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -45,24 +47,30 @@ export default function Navigation() {
       }`}>
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-bold text-xl">
-            👨🏼‍💻 {PERSONAL_INFO.name}
-          </motion.div>
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ 
+              opacity: isScrolled ? 1 : 0,
+              scale: isScrolled ? 1 : 0.8
+            }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="text-2xl hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full p-2 transition-colors">
+            🏠
+          </motion.button>
 
-          <div className="hidden md:flex space-x-8 mr-12">
+          <div className="hidden md:flex space-x-8 absolute left-1/2 transform -translate-x-1/2">
             {navigation.map((item, index) => (
               <motion.button
                 key={item.name}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                whileHover={{ 
+                whileHover={{
                   scale: 1.05,
-                  transition: { duration: 0.2 }
+                  transition: { duration: 0.2 },
                 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => scrollToSection(item.href)}
@@ -78,11 +86,13 @@ export default function Navigation() {
             ))}
           </div>
 
-          <motion.div 
+          <div className="hidden md:block w-24"></div>
+
+          <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="md:hidden mr-12">
+            className="md:hidden">
             <Button
               variant="ghost"
               size="sm"
@@ -102,13 +112,13 @@ export default function Navigation() {
 
         <AnimatePresence>
           {isOpen && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="md:hidden overflow-hidden">
-              <motion.div 
+              <motion.div
                 initial={{ y: -10 }}
                 animate={{ y: 0 }}
                 exit={{ y: -10 }}
@@ -121,10 +131,10 @@ export default function Navigation() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.2, delay: index * 0.1 }}
-                    whileHover={{ 
+                    whileHover={{
                       scale: 1.02,
                       x: 5,
-                      transition: { duration: 0.2 }
+                      transition: { duration: 0.2 },
                     }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => scrollToSection(item.href)}

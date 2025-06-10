@@ -14,33 +14,25 @@ export default function Hero() {
         transition={{ duration: 2 }}
         className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20"
       />
-      
+
       <div className="max-w-4xl mx-auto text-center relative z-10">
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="text-display font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+          className="text-display font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
           {PERSONAL_INFO.name}
         </motion.h1>
-        
-        <motion.h2 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-          className="text-title font-semibold text-gray-600 dark:text-gray-300 mb-4">
-          {PERSONAL_INFO.title}
-        </motion.h2>
-        
-        <motion.p 
+
+        <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
           className="text-body text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
           {PERSONAL_INFO.tagline}
         </motion.p>
-        
-        <motion.p 
+
+        <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
@@ -48,7 +40,7 @@ export default function Hero() {
           {PERSONAL_INFO.bio}
         </motion.p>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
@@ -57,7 +49,9 @@ export default function Hero() {
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}>
-            <Button size="lg" className="text-lg px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all">
+            <Button
+              size="lg"
+              className="text-lg px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all">
               <Mail className="mr-2 h-5 w-5" />
               Get In Touch
             </Button>
@@ -66,13 +60,16 @@ export default function Hero() {
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-3 border-2 hover:bg-gray-50 dark:hover:bg-gray-800 shadow-md hover:shadow-lg transition-all">
+            <Button
+              variant="outline"
+              size="lg"
+              className="text-lg px-8 py-3 border-2 hover:bg-gray-50 dark:hover:bg-gray-800 shadow-md hover:shadow-lg transition-all">
               View My Work
             </Button>
           </motion.div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1, ease: "easeOut" }}
@@ -111,28 +108,28 @@ export default function Hero() {
           </motion.a>
         </motion.div>
       </div>
-      
+
       <motion.div
-        animate={{ 
+        animate={{
           scale: [1, 1.1, 1],
           rotate: [0, 180, 360],
         }}
-        transition={{ 
+        transition={{
           duration: 20,
           repeat: Infinity,
-          ease: "linear"
+          ease: "linear",
         }}
         className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-xl"
       />
       <motion.div
-        animate={{ 
+        animate={{
           scale: [1.1, 1, 1.1],
           rotate: [360, 180, 0],
         }}
-        transition={{ 
+        transition={{
           duration: 25,
           repeat: Infinity,
-          ease: "linear"
+          ease: "linear",
         }}
         className="absolute bottom-20 left-20 w-40 h-40 bg-gradient-to-br from-purple-200/30 to-pink-200/30 rounded-full blur-xl"
       />

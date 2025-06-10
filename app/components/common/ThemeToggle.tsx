@@ -40,7 +40,7 @@ export default function ThemeToggle() {
       initial={{ opacity: 0, scale: 0.8, y: -20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-      className="fixed top-4 right-4 z-[60]">
+      className="fixed top-4 right-4 z-[60] md:right-4 right-16">
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -49,7 +49,7 @@ export default function ThemeToggle() {
           variant="ghost"
           size="sm"
           onClick={toggleTheme}
-          className="backdrop-blur-apple bg-white/60 dark:bg-gray-900/60 border border-gray-200/50 dark:border-gray-700/50 shadow-lg shadow-black/5 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 rounded-full w-10 h-10 p-0">
+          className="backdrop-blur-apple bg-white/60 dark:bg-gray-900/60 border border-gray-200/50 dark:border-gray-700/50 shadow-lg shadow-black/5 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 rounded-full w-10 h-10 p-0 flex items-center justify-center">
           <AnimatePresence mode="wait" initial={false}>
             {isDark ? (
               <motion.div

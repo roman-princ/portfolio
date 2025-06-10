@@ -19,18 +19,37 @@ export default function Projects() {
   const otherProjects = PROJECTS.filter((project) => !project.featured);
 
   return (
-    <section id="projects" className="py-20 px-4 bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/30 dark:from-gray-900 dark:via-blue-900/10 dark:to-indigo-900/10 relative overflow-hidden">
+    <section id="projects" className="py-20 px-4 relative overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.05 }}
+        transition={{ duration: 2 }}
+        className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20"
+      />
+      
       <motion.div
         animate={{ 
-          rotate: [0, 360],
-          scale: [1, 1.3, 1],
+          scale: [1, 1.1, 1],
+          rotate: [0, 180, 360],
         }}
         transition={{ 
           duration: 40,
           repeat: Infinity,
           ease: "linear"
         }}
-        className="absolute top-1/4 right-1/4 w-32 h-32 bg-gradient-to-br from-indigo-200/20 to-purple-200/20 rounded-full blur-2xl"
+        className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-indigo-200/30 to-purple-200/30 rounded-full blur-xl"
+      />
+      <motion.div
+        animate={{ 
+          scale: [1.1, 1, 1.1],
+          rotate: [360, 180, 0],
+        }}
+        transition={{ 
+          duration: 45,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        className="absolute bottom-20 left-20 w-40 h-40 bg-gradient-to-br from-purple-200/30 to-pink-200/30 rounded-full blur-xl"
       />
       
       <div className="max-w-6xl mx-auto relative z-10">
@@ -39,8 +58,8 @@ export default function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-headline font-bold text-center mb-16">
-          Featured Projects
+          className="text-6xl md:text-7xl lg:text-8xl font-bold text-right mb-16 px-4 bg-gradient-to-r from-gray-600 to-white dark:from-gray-400 dark:to-gray-100 bg-clip-text text-transparent">
+          Projects
         </motion.h2>
 
         <div className="grid md:grid-cols-2 gap-8 mb-16">

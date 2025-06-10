@@ -11,8 +11,17 @@ export interface Project {
 
 export interface Skill {
   name: string;
-  level: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
-  category: 'Frontend' | 'Backend' | 'Mobile' | 'Database' | 'Cloud' | 'Tools' | 'CMS' | 'Game Dev' | 'DevOps';
+  level: "Beginner" | "Intermediate" | "Advanced" | "Expert";
+  category:
+    | "Frontend"
+    | "Backend"
+    | "Mobile"
+    | "Database"
+    | "Cloud"
+    | "Tools"
+    | "CMS"
+    | "Game Dev"
+    | "DevOps";
 }
 
 export interface Experience {
@@ -22,6 +31,7 @@ export interface Experience {
   period: string;
   description: string[];
   technologies: string[];
+  current?: boolean;
 }
 
 export interface Education {
@@ -30,6 +40,19 @@ export interface Education {
   degree: string;
   period: string;
   description?: string;
+}
+
+export interface Certificate {
+  id: string;
+  name: string;
+  link?: string;
+  issuer: string;
+  issueDate: string;
+  expiryDate?: string;
+  credentialId?: string;
+  credentialUrl?: string;
+  description?: string;
+  skills: string[];
 }
 
 export interface ContactInfo {

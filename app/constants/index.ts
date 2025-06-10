@@ -1,18 +1,23 @@
-import { Project, Skill, Experience, Education, ContactInfo } from "../types";
+import {
+  Project,
+  Skill,
+  Experience,
+  Education,
+  ContactInfo,
+  Certificate,
+} from "../types";
 
 export const PERSONAL_INFO = {
   name: "Roman Princ",
-  title: "Full Stack Developer",
-  tagline:
-    "Building innovative digital solutions with cutting-edge technologies",
-  bio: "Passionate full-stack developer and Software Engineering student at CTU Prague. From mobile apps with React Native to enterprise systems with .NET and Ruby on Rails, I create efficient, scalable solutions. National athletics champion with a record-breaking mindset applied to code.",
-  location: "Jablonec nad Nisou / Praha, Czech Republic",
+  tagline: "Playing with ones and zeros",
+  bio: "Full-stack developer and Software Engineering student at CTU Prague.",
+  location: "Prague, Czech Republic",
   yearsOfExperience: 2,
 };
 
 export const CONTACT_INFO: ContactInfo = {
   email: "roman.princ00@gmail.com",
-  location: "Jablonec nad Nisou / Praha, Czech Republic",
+  location: "Prague, Czech Republic",
   linkedin: "https://www.linkedin.com/in/roman-princ-717a58244/",
   github: "https://github.com/romanprinc",
   twitter: "https://twitter.com/romanprinc",
@@ -23,38 +28,32 @@ export const SKILLS: Skill[] = [
   // Frontend Technologies
   { name: "React", level: "Advanced", category: "Frontend" },
   { name: "Angular", level: "Advanced", category: "Frontend" },
-  { name: "JavaScript", level: "Advanced", category: "Frontend" },
   { name: "TypeScript", level: "Advanced", category: "Frontend" },
-  { name: "HTML/CSS", level: "Advanced", category: "Frontend" },
+  { name: "Electron", level: "Intermediate", category: "Frontend" },
 
   // Backend Technologies
   { name: "C#", level: "Advanced", category: "Backend" },
   { name: ".NET", level: "Advanced", category: "Backend" },
-  { name: "Ruby on Rails", level: "Intermediate", category: "Backend" },
   { name: "Node.js", level: "Advanced", category: "Backend" },
   { name: "Python", level: "Advanced", category: "Backend" },
   { name: "C++", level: "Intermediate", category: "Backend" },
   { name: "C", level: "Intermediate", category: "Backend" },
-  { name: "REST API", level: "Advanced", category: "Backend" },
 
   // Mobile Development
   { name: "React Native", level: "Advanced", category: "Mobile" },
   { name: "Ionic", level: "Intermediate", category: "Mobile" },
   { name: "Capacitor", level: "Intermediate", category: "Mobile" },
-  { name: "Kotlin", level: "Beginner", category: "Mobile" },
 
   // Database Technologies
   { name: "PostgreSQL", level: "Advanced", category: "Database" },
-  { name: "MSSQL", level: "Intermediate", category: "Database" },
-  { name: "Redis", level: "Intermediate", category: "Database" },
 
   // Cloud & DevOps
-  { name: "Azure", level: "Intermediate", category: "Cloud" },
+  { name: "Oracle Cloud", level: "Intermediate", category: "Cloud" },
   { name: "Git", level: "Advanced", category: "Tools" },
+  { name: "Jenkins", level: "Intermediate", category: "Tools" },
 
-  // CMS & Game Development
+  // CMS
   { name: "WordPress", level: "Intermediate", category: "CMS" },
-  { name: "Unity", level: "Intermediate", category: "Game Dev" },
 ];
 
 export const PROJECTS: Project[] = [
@@ -135,10 +134,31 @@ export const PROJECTS: Project[] = [
 
 export const EXPERIENCE: Experience[] = [
   {
+    id: "exp-0",
+    company: "Trueslav s.r.o. (Freelance)",
+    position: "Software Engineer",
+    period: "February 2025 - Present",
+    current: true,
+    description: [
+      "Working mainly on projects using TypeScript, GraphQL and React",
+      "Developing a kiosk application for a client",
+      "Looking forward what the future holds",
+    ],
+    technologies: [
+      "TypeScript",
+      "GraphQL",
+      "React",
+      "Next.js",
+      "Tailwind CSS",
+      "PostgreSQL",
+      "Docker",
+    ],
+  },
+  {
     id: "exp-1",
     company: "FreshPoint s.r.o. (Freelance)",
-    position: "Full Stack Developer & Development Lead",
-    period: "2024",
+    position: "Full Stack Developer",
+    period: "August 2024 - February 2025",
     description: [
       "Led development of new B2C application using Angular, Ionic, and Node.js",
       "Designed application infrastructure and coordinated with sales department",
@@ -152,6 +172,7 @@ export const EXPERIENCE: Experience[] = [
       "TypeScript",
       "Capacitor",
       "PWA",
+      "Jenkins",
     ],
   },
   {
@@ -216,5 +237,73 @@ export const EDUCATION: Education[] = [
     period: "2019 - 2023",
     description:
       "Graduated with honors in Information Technology. Gained expertise in C#, .NET, Python, JavaScript, HTML, CSS, React, Unity, and REST API development. Strong foundation in web development and software engineering principles.",
+  },
+];
+
+export const CERTIFICATES: Certificate[] = [
+  {
+    id: "cert-1",
+    name: "5th place at the 45th national exhibition of High school Vocational Activities in the IT field",
+    issuer: "SOČ",
+    issueDate: "2023",
+    description:
+      "Awarded for the 5th place at the 45th national exhibition of High school Vocational Activities in the IT field.",
+    skills: ["React Native", "IoT", "Low-level Communication"],
+  },
+  {
+    id: "cert-2",
+    name: "Database Design",
+    link: "https://github.com/roman-princ/certifications/blob/main/dd_database_design.pdf",
+    issuer: "Oracle",
+    issueDate: "2024",
+    description:
+      "Comprehensive certification covering database design, normalization, and SQL.",
+    skills: ["Database Design", "Normalization", "SQL"],
+  },
+  {
+    id: "cert-3",
+    name: "Database programming with SQL",
+    link: "https://github.com/roman-princ/certifications/blob/main/database_programming.pdf",
+    issuer: "Oracle",
+    issueDate: "2024",
+    description:
+      "Comprehensive certification covering database programming with SQL.",
+    skills: ["SQL", "Database Programming", "Database Design"],
+  },
+  {
+    id: "cert-4",
+    name: "Introduction to IoT",
+    link: "https://www.credly.com/badges/41e91729-143a-4dcb-93c3-ac069a95a5c5",
+    issuer: "Cisco",
+    issueDate: "2022",
+    description: "Comprehensive course on IoT.",
+    skills: ["IoT"],
+  },
+  {
+    id: "cert-5",
+    name: "CCNA: Introduction to Networks",
+    link: "https://www.credly.com/badges/faee6efd-a4f8-471c-a621-3c8070b3430b",
+    issuer: "Cisco",
+    issueDate: "2022",
+    description: "Comprehensive course on networks.",
+    skills: ["Networking"],
+  },
+  {
+    id: "cert-6",
+    name: "IT Essentials",
+    link: "https://www.credly.com/badges/29e8a39e-0bdf-408f-aebf-60f19ab41a29/public=url",
+    issuer: "Cisco",
+    issueDate: "2022",
+    description: "Comprehensive course on IT essentials.",
+    skills: ["IT Essentials"],
+  },
+  {
+    id: "cert-7",
+    name: "Python (Basic) Certification",
+    link: "https://www.hackerrank.com/certificates/b0ab0e5d66de",
+    issuer: "HackerRank",
+    issueDate: "2022",
+    description: "Basic Python certification.",
+    skills: ["Python"],
   },
 ];

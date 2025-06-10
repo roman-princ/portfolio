@@ -15,7 +15,7 @@ export default function Contact() {
     email: "",
     message: "",
   });
-  
+
   const cursorRef = useCursorLight();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -41,38 +41,30 @@ export default function Contact() {
     <section id="contact" className="py-20 px-4 relative overflow-hidden">
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.02 }}
+        animate={{ opacity: 0.05 }}
         transition={{ duration: 2 }}
-        className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-900/10 dark:via-purple-900/10 dark:to-pink-900/10"
+        className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20"
       />
-      
+
       <div className="max-w-6xl mx-auto relative z-10">
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-headline font-bold text-center mb-16">
-          Get In Touch
+          className="text-6xl md:text-7xl lg:text-8xl font-bold text-left mb-16 px-4 bg-gradient-to-r from-gray-600 to-white dark:from-gray-400 dark:to-gray-100 bg-clip-text text-transparent">
+          Let's Connect
         </motion.h2>
-
+        
         <div className="grid md:grid-cols-2 gap-12">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="space-y-8">
             <div>
-              <motion.h3 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-title font-semibold mb-6">
-                Let's Connect
-              </motion.h3>
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -84,13 +76,13 @@ export default function Contact() {
               </motion.p>
             </div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="space-y-4">
-              <motion.div 
+              <motion.div
                 whileHover={{ x: 5, transition: { duration: 0.2 } }}
                 className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer">
                 <motion.div
@@ -105,7 +97,7 @@ export default function Contact() {
                 </a>
               </motion.div>
 
-              <motion.div 
+              <motion.div
                 whileHover={{ x: 5, transition: { duration: 0.2 } }}
                 className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                 <motion.div
@@ -119,7 +111,7 @@ export default function Contact() {
               </motion.div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -168,82 +160,94 @@ export default function Contact() {
                 className="mb-6">
                 <h3 className="text-title font-semibold">Send a Message</h3>
               </motion.div>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.3 }}>
-                    <Input
-                      type="text"
-                      name="name"
-                      placeholder="Your Name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="glass-badge border-0 bg-transparent focus:ring-2 focus:ring-blue-500/30 transition-all"
-                    />
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.4 }}>
-                    <Input
-                      type="email"
-                      name="email"
-                      placeholder="Your Email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="glass-badge border-0 bg-transparent focus:ring-2 focus:ring-blue-500/30 transition-all"
-                    />
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.5 }}>
-                    <Textarea
-                      name="message"
-                      placeholder="Your Message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={5}
-                      required
-                      className="glass-badge border-0 bg-transparent focus:ring-2 focus:ring-blue-500/30 transition-all resize-none"
-                    />
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.6 }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}>
-                    <Button 
-                      type="submit" 
-                      className="w-full glass border-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 text-blue-700 dark:text-blue-300 font-semibold shadow-lg hover:shadow-xl transition-all">
-                      Send Message
-                    </Button>
-                  </motion.div>
-                </form>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.3 }}>
+                  <Input
+                    type="text"
+                    name="name"
+                    placeholder="Your Name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="glass-badge border-0 bg-transparent focus:ring-2 focus:ring-blue-500/30 transition-all"
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.4 }}>
+                  <Input
+                    type="email"
+                    name="email"
+                    placeholder="Your Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="glass-badge border-0 bg-transparent focus:ring-2 focus:ring-blue-500/30 transition-all"
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.5 }}>
+                  <Textarea
+                    name="message"
+                    placeholder="Your Message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={5}
+                    required
+                    className="glass-badge border-0 bg-transparent focus:ring-2 focus:ring-blue-500/30 transition-all resize-none"
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}>
+                  <Button
+                    type="submit"
+                    className="w-full glass border-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 text-blue-700 dark:text-blue-300 font-semibold shadow-lg hover:shadow-xl transition-all">
+                    Send Message
+                  </Button>
+                </motion.div>
+              </form>
             </div>
           </motion.div>
         </div>
       </div>
-      
+
       <motion.div
-        animate={{ 
-          rotate: [0, 360],
-          scale: [1, 1.2, 1],
+        animate={{
+          scale: [1, 1.1, 1],
+          rotate: [0, 180, 360],
         }}
-        transition={{ 
+        transition={{
           duration: 35,
           repeat: Infinity,
-          ease: "linear"
+          ease: "linear",
         }}
-        className="absolute bottom-20 right-20 w-28 h-28 bg-gradient-to-br from-purple-200/20 to-pink-200/20 rounded-full blur-xl"
+        className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-indigo-200/30 to-purple-200/30 rounded-full blur-xl"
+      />
+      <motion.div
+        animate={{
+          scale: [1.1, 1, 1.1],
+          rotate: [360, 180, 0],
+        }}
+        transition={{
+          duration: 40,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        className="absolute bottom-20 left-20 w-40 h-40 bg-gradient-to-br from-purple-200/30 to-pink-200/30 rounded-full blur-xl"
       />
     </section>
   );
