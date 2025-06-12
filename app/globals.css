@@ -194,6 +194,33 @@
     letter-spacing: var(--letter-spacing-caption);
     line-height: var(--line-height-caption);
   }
+  
+  /* Hide scrollbars */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Improved gradient text that works in both light and dark modes */
+  .gradient-text {
+    background: linear-gradient(135deg, #1f2937 0%, #4b5563 50%, #111827 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  
+  .dark .gradient-text {
+    background: linear-gradient(135deg, #9ca3af 0%, #f3f4f6 50%, #e5e7eb 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
 }
 
 

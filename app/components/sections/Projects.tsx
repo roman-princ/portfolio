@@ -2,15 +2,6 @@
 
 import { PROJECTS } from "@/app/constants";
 import { useCursorLight } from "@/app/hooks/useCursorLight";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ExternalLink, Github } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -58,7 +49,7 @@ export default function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-6xl md:text-7xl lg:text-8xl font-bold text-right mb-16 px-4 bg-gradient-to-r from-gray-600 to-white dark:from-gray-400 dark:to-gray-100 bg-clip-text text-transparent">
+          className="text-6xl md:text-7xl lg:text-8xl font-bold text-right mb-16 px-4 py-1 gradient-text">
           Projects
         </motion.h2>
 

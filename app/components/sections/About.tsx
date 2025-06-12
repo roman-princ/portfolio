@@ -22,7 +22,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-6xl md:text-7xl lg:text-8xl font-bold text-left mb-16 px-4 bg-gradient-to-r from-gray-600 to-white dark:from-gray-400 dark:to-gray-100 bg-clip-text text-transparent">
+          className="text-6xl md:text-7xl lg:text-8xl font-bold text-left mb-8 gradient-text">
           About Me
         </motion.h2>
 
@@ -55,8 +55,9 @@ export default function About() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="text-caption text-gray-600 dark:text-gray-300 mb-6">
               With {PERSONAL_INFO.yearsOfExperience}+ years of experience in
-              software development, I specialize in creating modern, responsive
-              web applications that provide exceptional user experiences.
+              software development, I specialize in creating fun and interesting
+              web apps. The next step is to learn mobile development and create
+              apps for mobile devices.
             </motion.p>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -64,9 +65,8 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.5 }}
               className="text-caption text-gray-600 dark:text-gray-300">
-              I'm passionate about clean code, performance optimization, and
-              staying up-to-date with the latest technologies and best practices
-              in web development.
+              I find interest in new technologies and diving deep into the
+              rabbit holes of random topics.
             </motion.p>
           </motion.div>
 
@@ -94,7 +94,7 @@ export default function About() {
                 {[
                   `📍 Based in ${PERSONAL_INFO.location}`,
                   `💼 ${PERSONAL_INFO.yearsOfExperience}+ years of experience`,
-                  `🎯 Focus on modern web technologies`,
+                  `🎯 Focus on modern web apps and mobile apps`,
                   `🌱 Always learning and growing`,
                   `📱 Trying to convert to mobile development`,
                 ].map((fact, index) => (
@@ -124,14 +124,14 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold text-right mb-12 px-4 bg-gradient-to-r from-gray-600 to-white dark:from-gray-400 dark:to-gray-100 bg-clip-text text-transparent">
+            className="text-5xl md:text-6xl lg:text-7xl font-bold text-right mb-4 gradient-text">
             Tech Stack
           </motion.h3>
         </motion.div>
       </div>
 
       {/* Full width skills slider */}
-      <div className="w-full overflow-hidden">
+      <div className="w-full overflow-hidden scrollbar-hide">
         <SkillsSlider skills={SKILLS} />
       </div>
 
@@ -206,11 +206,11 @@ function SkillsSlider({ skills }: SkillsSliderProps) {
 
   return (
     <div
-      className="w-full overflow-hidden space-y-4"
+      className="w-full overflow-hidden space-y-4 scrollbar-hide"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
       {/* First Row - Left to Right */}
-      <div className="relative overflow-hidden py-4">
+      <div className="relative overflow-hidden py-4 scrollbar-hide">
         <motion.div
           animate={{ x: [0, "-50%"] }}
           transition={{
@@ -233,7 +233,7 @@ function SkillsSlider({ skills }: SkillsSliderProps) {
       </div>
 
       {/* Second Row - Right to Left */}
-      <div className="relative overflow-hidden py-4">
+      <div className="relative overflow-hidden py-4 scrollbar-hide">
         <motion.div
           animate={{ x: ["-50%", "0%"] }}
           transition={{
@@ -270,45 +270,45 @@ function SkillIcon({ skill, iconPath }: SkillIconProps) {
     // Use logo-specific colors for each technology
     const logoColors: Record<string, string> = {
       React:
-        "bg-gradient-to-r from-cyan-400/80 to-cyan-600/80 dark:from-cyan-400/60 dark:to-cyan-600/60 border-cyan-400/30 text-white",
+        "bg-gradient-to-r from-cyan-400/80 to-cyan-600/80 dark:from-cyan-400/60 dark:to-cyan-600/60 border-cyan-400/30 text-gray-900 dark:text-white",
       Angular:
-        "bg-gradient-to-r from-red-500/80 to-red-700/80 dark:from-red-500/60 dark:to-red-700/60 border-red-400/30 text-white",
+        "bg-gradient-to-r from-red-500/80 to-red-700/80 dark:from-red-500/60 dark:to-red-700/60 border-red-400/30 text-gray-900 dark:text-white",
       TypeScript:
-        "bg-gradient-to-r from-blue-500/80 to-blue-700/80 dark:from-blue-500/60 dark:to-blue-700/60 border-blue-400/30 text-white",
+        "bg-gradient-to-r from-blue-500/80 to-blue-700/80 dark:from-blue-500/60 dark:to-blue-700/60 border-blue-400/30 text-gray-900 dark:text-white",
       JavaScript:
-        "bg-gradient-to-r from-yellow-400/80 to-yellow-600/80 dark:from-yellow-400/60 dark:to-yellow-600/60 border-yellow-400/30 text-black",
+        "bg-gradient-to-r from-yellow-400/80 to-yellow-600/80 dark:from-yellow-400/60 dark:to-yellow-600/60 border-yellow-400/30 text-black dark:text-black",
       Electron:
-        "bg-gradient-to-r from-slate-600/80 to-slate-800/80 dark:from-slate-600/60 dark:to-slate-800/60 border-slate-400/30 text-white",
-      "C#": "bg-gradient-to-r from-purple-600/80 to-purple-800/80 dark:from-purple-600/60 dark:to-purple-800/60 border-purple-400/30 text-white",
+        "bg-gradient-to-r from-slate-600/80 to-slate-800/80 dark:from-slate-600/60 dark:to-slate-800/60 border-slate-400/30 text-gray-900 dark:text-white",
+      "C#": "bg-gradient-to-r from-purple-600/80 to-purple-800/80 dark:from-purple-600/60 dark:to-purple-800/60 border-purple-400/30 text-gray-900 dark:text-white",
       ".NET":
-        "bg-gradient-to-r from-purple-600/80 to-indigo-700/80 dark:from-purple-600/60 dark:to-indigo-700/60 border-purple-400/30 text-white",
+        "bg-gradient-to-r from-purple-600/80 to-indigo-700/80 dark:from-purple-600/60 dark:to-indigo-700/60 border-purple-400/30 text-gray-900 dark:text-white",
       "Node.js":
-        "bg-gradient-to-r from-green-500/80 to-green-700/80 dark:from-green-500/60 dark:to-green-700/60 border-green-400/30 text-white",
+        "bg-gradient-to-r from-green-500/80 to-green-700/80 dark:from-green-500/60 dark:to-green-700/60 border-green-400/30 text-gray-900 dark:text-white",
       Python:
-        "bg-gradient-to-r from-blue-500/80 to-yellow-500/80 dark:from-blue-500/60 dark:to-yellow-500/60 border-blue-400/30 text-white",
+        "bg-gradient-to-r from-blue-500/80 to-yellow-500/80 dark:from-blue-500/60 dark:to-yellow-500/60 border-blue-400/30 text-gray-900 dark:text-white",
       "C++":
-        "bg-gradient-to-r from-blue-600/80 to-blue-800/80 dark:from-blue-600/60 dark:to-blue-800/60 border-blue-400/30 text-white",
-      C: "bg-gradient-to-r from-blue-700/80 to-blue-900/80 dark:from-blue-700/60 dark:to-blue-900/60 border-blue-400/30 text-white",
+        "bg-gradient-to-r from-blue-600/80 to-blue-800/80 dark:from-blue-600/60 dark:to-blue-800/60 border-blue-400/30 text-gray-900 dark:text-white",
+      C: "bg-gradient-to-r from-blue-700/80 to-blue-900/80 dark:from-blue-700/60 dark:to-blue-900/60 border-blue-400/30 text-gray-900 dark:text-white",
       "React Native":
-        "bg-gradient-to-r from-cyan-400/80 to-cyan-600/80 dark:from-cyan-400/60 dark:to-cyan-600/60 border-cyan-400/30 text-white",
+        "bg-gradient-to-r from-cyan-400/80 to-cyan-600/80 dark:from-cyan-400/60 dark:to-cyan-600/60 border-cyan-400/30 text-gray-900 dark:text-white",
       Ionic:
-        "bg-gradient-to-r from-blue-500/80 to-blue-700/80 dark:from-blue-500/60 dark:to-blue-700/60 border-blue-400/30 text-white",
+        "bg-gradient-to-r from-blue-500/80 to-blue-700/80 dark:from-blue-500/60 dark:to-blue-700/60 border-blue-400/30 text-gray-900 dark:text-white",
       Capacitor:
-        "bg-gradient-to-r from-blue-500/80 to-blue-700/80 dark:from-blue-500/60 dark:to-blue-700/60 border-blue-400/30 text-white",
+        "bg-gradient-to-r from-blue-500/80 to-blue-700/80 dark:from-blue-500/60 dark:to-blue-700/60 border-blue-400/30 text-gray-900 dark:text-white",
       PostgreSQL:
-        "bg-gradient-to-r from-blue-600/80 to-blue-800/80 dark:from-blue-600/60 dark:to-blue-800/60 border-blue-400/30 text-white",
+        "bg-gradient-to-r from-blue-600/80 to-blue-800/80 dark:from-blue-600/60 dark:to-blue-800/60 border-blue-400/30 text-gray-900 dark:text-white",
       "Oracle Cloud":
-        "bg-gradient-to-r from-red-600/80 to-red-800/80 dark:from-red-600/60 dark:to-red-800/60 border-red-400/30 text-white",
-      Git: "bg-gradient-to-r from-orange-500/80 to-red-600/80 dark:from-orange-500/60 dark:to-red-600/60 border-orange-400/30 text-white",
+        "bg-gradient-to-r from-red-600/80 to-red-800/80 dark:from-red-600/60 dark:to-red-800/60 border-red-400/30 text-gray-900 dark:text-white",
+      Git: "bg-gradient-to-r from-orange-500/80 to-red-600/80 dark:from-orange-500/60 dark:to-red-600/60 border-orange-400/30 text-gray-900 dark:text-white",
       Jenkins:
-        "bg-gradient-to-r from-blue-500/80 to-blue-700/80 dark:from-blue-500/60 dark:to-blue-700/60 border-blue-400/30 text-white",
+        "bg-gradient-to-r from-blue-500/80 to-blue-700/80 dark:from-blue-500/60 dark:to-blue-700/60 border-blue-400/30 text-gray-900 dark:text-white",
       WordPress:
-        "bg-gradient-to-r from-blue-600/80 to-blue-800/80 dark:from-blue-600/60 dark:to-blue-800/60 border-blue-400/30 text-white",
+        "bg-gradient-to-r from-blue-600/80 to-blue-800/80 dark:from-blue-600/60 dark:to-blue-800/60 border-blue-400/30 text-gray-900 dark:text-white",
     };
 
     return (
       logoColors[skillName] ||
-      "bg-gradient-to-r from-gray-500/80 to-gray-600/80 dark:from-gray-500/60 dark:to-gray-600/60 border-gray-400/30 text-white"
+      "bg-gradient-to-r from-gray-500/80 to-gray-600/80 dark:from-gray-500/60 dark:to-gray-600/60 border-gray-400/30 text-gray-900 dark:text-white"
     );
   };
 

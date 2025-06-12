@@ -12,7 +12,7 @@ export const PERSONAL_INFO = {
   tagline: "Getting payed for writing colorful text",
   bio: "Full-stack developer and Software Engineering student at CTU Prague.",
   location: "Prague, Czech Republic",
-  yearsOfExperience: 2,
+  yearsOfExperience: new Date().getFullYear() - 2022,
 };
 
 export const CONTACT_INFO: ContactInfo = {

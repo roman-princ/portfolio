@@ -16,21 +16,23 @@ export default function Contact() {
     message: "",
   });
 
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
 
   const cursorRef = useCursorLight();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (submitStatus !== 'idle') return;
-    
-    setSubmitStatus('sending');
+    if (submitStatus !== "idle") return;
+
+    setSubmitStatus("sending");
 
     try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
+      const response = await fetch("/api/send-email", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -38,12 +40,12 @@ export default function Contact() {
       const data = await response.json();
 
       if (response.ok) {
-        setSubmitStatus('success');
+        setSubmitStatus("success");
       } else {
-        setSubmitStatus('error');
+        setSubmitStatus("error");
       }
     } catch (error) {
-      setSubmitStatus('error');
+      setSubmitStatus("error");
     }
   };
 
@@ -71,10 +73,10 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-6xl md:text-7xl lg:text-8xl font-bold text-left mb-16 px-4 bg-gradient-to-r from-gray-600 to-white dark:from-gray-400 dark:to-gray-100 bg-clip-text text-transparent">
+          className="text-6xl md:text-7xl lg:text-8xl font-bold text-left mb-8 gradient-text">
           Let's Connect
         </motion.h2>
-        
+
         <div className="grid md:grid-cols-2 gap-12">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -90,8 +92,8 @@ export default function Contact() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="text-body text-gray-600 dark:text-gray-300 mb-8">
                 I'm always interested in new opportunities and collaborations.
-                Whether you have a project in mind or just want to chat about
-                technology, feel free to reach out!
+                Whether you have a project in mind or just want connect for
+                future collaborations, feel free to reach out!
               </motion.p>
             </div>
 
@@ -184,37 +186,37 @@ export default function Contact() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.6 }}
-                  whileHover={{ scale: submitStatus === 'idle' ? 1.02 : 1 }}
-                  whileTap={{ scale: submitStatus === 'idle' ? 0.98 : 1 }}>
+                  whileHover={{ scale: submitStatus === "idle" ? 1.02 : 1 }}
+                  whileTap={{ scale: submitStatus === "idle" ? 0.98 : 1 }}>
                   <Button
                     type="submit"
-                    disabled={submitStatus !== 'idle'}
+                    disabled={submitStatus !== "idle"}
                     className={`w-full glass border-0 font-semibold shadow-lg hover:shadow-xl transition-all ${
-                      submitStatus === 'success'
-                        ? 'bg-gradient-to-r from-green-600/20 to-emerald-600/20 text-green-700 dark:text-green-300'
-                        : submitStatus === 'error'
-                        ? 'bg-gradient-to-r from-red-600/20 to-pink-600/20 text-red-700 dark:text-red-300'
-                        : 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 text-blue-700 dark:text-blue-300'
-                    } ${submitStatus !== 'idle' ? 'cursor-not-allowed' : ''}`}>
-                    {submitStatus === 'sending' && (
+                      submitStatus === "success"
+                        ? "bg-gradient-to-r from-green-600/20 to-emerald-600/20 text-green-700 dark:text-green-300"
+                        : submitStatus === "error"
+                          ? "bg-gradient-to-r from-red-600/20 to-pink-600/20 text-red-700 dark:text-red-300"
+                          : "bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 text-blue-700 dark:text-blue-300"
+                    } ${submitStatus !== "idle" ? "cursor-not-allowed" : ""}`}>
+                    {submitStatus === "sending" && (
                       <span className="flex items-center gap-2">
                         <Send className="h-4 w-4" />
                         Sending...
                       </span>
                     )}
-                    {submitStatus === 'success' && (
+                    {submitStatus === "success" && (
                       <span className="flex items-center gap-2">
                         <CheckCircle className="h-4 w-4" />
                         Message Sent!
                       </span>
                     )}
-                    {submitStatus === 'error' && (
+                    {submitStatus === "error" && (
                       <span className="flex items-center gap-2">
                         <AlertCircle className="h-4 w-4" />
                         Failed to Send
                       </span>
                     )}
-                    {submitStatus === 'idle' && (
+                    {submitStatus === "idle" && (
                       <span className="flex items-center gap-2">
                         <Send className="h-4 w-4" />
                         Send Message

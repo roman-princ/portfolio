@@ -47,7 +47,7 @@ export default function Certificates() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-6xl md:text-7xl lg:text-8xl font-bold text-right mb-16 px-4 bg-gradient-to-r from-gray-600 to-white dark:from-gray-400 dark:to-gray-100 bg-clip-text text-transparent">
+          className="text-6xl md:text-7xl lg:text-8xl font-bold text-right mb-8 px-4 gradient-text">
           Certs & Awards
         </motion.h2>
 
@@ -94,10 +94,18 @@ function CertificateCard({ certificate, index }: CertificateCardProps) {
         className="h-full glass-card cursor-light rounded-2xl p-6 transition-all duration-500 shadow-lg hover:shadow-xl"
         onClick={() => {
           if (certificate.credentialUrl || certificate.link) {
-            window.open(certificate.credentialUrl || certificate.link, '_blank');
+            window.open(
+              certificate.credentialUrl || certificate.link,
+              "_blank"
+            );
           }
         }}
-        style={{ cursor: (certificate.credentialUrl || certificate.link) ? 'pointer' : 'default' }}>
+        style={{
+          cursor:
+            certificate.credentialUrl || certificate.link
+              ? "pointer"
+              : "default",
+        }}>
         <div className="flex items-start justify-between mb-4">
           <motion.div
             whileHover={{ scale: 1.1, rotate: 5 }}
