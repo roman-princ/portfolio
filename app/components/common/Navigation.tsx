@@ -29,9 +29,31 @@ export default function Navigation() {
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      // Close mobile menu first
+      setIsOpen(false);
+
+      // Add slight delay for mobile menu animation to complete
+      setTimeout(() => {
+        // Get the navigation height to offset scroll position
+        const navHeight = document.querySelector("nav")?.offsetHeight || 0;
+        const elementPosition =
+          element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - navHeight - 20; // Extra 20px padding
+
+        // Use different scroll methods for better mobile compatibility
+        if ("scrollTo" in window) {
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        } else {
+          // Fallback for older mobile browsers
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 300); // Wait for mobile menu close animation
+    } else {
+      setIsOpen(false);
     }
-    setIsOpen(false);
   };
 
   return (
@@ -40,7 +62,7 @@ export default function Navigation() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        isScrolled
+        isScrolled || isOpen
           ? "bg-white/60 dark:bg-gray-900/60 backdrop-blur-apple border-b border-gray-200/50 dark:border-gray-700/50 shadow-lg shadow-black/5"
           : "bg-transparent"
       }`}>
@@ -122,7 +144,7 @@ export default function Navigation() {
                 animate={{ y: 0 }}
                 exit={{ y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+                className="px-2 pt-2 pb-3 space-y-1 light:bg-white dark:bg-transparent border-t border-gray-200 dark:border-gray-700">
                 {navigation.map((item, index) => (
                   <motion.button
                     key={item.name}
