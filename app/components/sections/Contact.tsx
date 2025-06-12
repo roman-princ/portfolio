@@ -5,7 +5,7 @@ import { CONTACT_INFO } from "@/app/constants";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MapPin, Github, Linkedin } from "lucide-react";
+import { Mail, MapPin, Github, Linkedin, Send, CheckCircle, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { useCursorLight } from "@/app/hooks/useCursorLight";
 
@@ -16,16 +16,35 @@ export default function Contact() {
     message: "",
   });
 
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
   const cursorRef = useCursorLight();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoLink = `mailto:${
-      CONTACT_INFO.email
-    }?subject=Portfolio Contact from ${formData.name}&body=${encodeURIComponent(
-      formData.message
-    )}%0A%0AFrom: ${formData.email}`;
-    window.location.href = mailtoLink;
+    if (submitStatus !== 'idle') return;
+    
+    setSubmitStatus('sending');
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+    }
   };
 
   const handleChange = (
@@ -211,12 +230,42 @@ export default function Contact() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.6 }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}>
+                  whileHover={{ scale: submitStatus === 'idle' ? 1.02 : 1 }}
+                  whileTap={{ scale: submitStatus === 'idle' ? 0.98 : 1 }}>
                   <Button
                     type="submit"
-                    className="w-full glass border-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 text-blue-700 dark:text-blue-300 font-semibold shadow-lg hover:shadow-xl transition-all">
-                    Send Message
+                    disabled={submitStatus !== 'idle'}
+                    className={`w-full glass border-0 font-semibold shadow-lg hover:shadow-xl transition-all ${
+                      submitStatus === 'success'
+                        ? 'bg-gradient-to-r from-green-600/20 to-emerald-600/20 text-green-700 dark:text-green-300'
+                        : submitStatus === 'error'
+                        ? 'bg-gradient-to-r from-red-600/20 to-pink-600/20 text-red-700 dark:text-red-300'
+                        : 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 text-blue-700 dark:text-blue-300'
+                    } ${submitStatus !== 'idle' ? 'cursor-not-allowed' : ''}`}>
+                    {submitStatus === 'sending' && (
+                      <span className="flex items-center gap-2">
+                        <Send className="h-4 w-4" />
+                        Sending...
+                      </span>
+                    )}
+                    {submitStatus === 'success' && (
+                      <span className="flex items-center gap-2">
+                        <CheckCircle className="h-4 w-4" />
+                        Message Sent!
+                      </span>
+                    )}
+                    {submitStatus === 'error' && (
+                      <span className="flex items-center gap-2">
+                        <AlertCircle className="h-4 w-4" />
+                        Failed to Send
+                      </span>
+                    )}
+                    {submitStatus === 'idle' && (
+                      <span className="flex items-center gap-2">
+                        <Send className="h-4 w-4" />
+                        Send Message
+                      </span>
+                    )}
                   </Button>
                 </motion.div>
               </form>
