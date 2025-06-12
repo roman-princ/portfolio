@@ -125,7 +125,7 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-5xl md:text-6xl lg:text-7xl font-bold text-right mb-12 px-4 bg-gradient-to-r from-gray-600 to-white dark:from-gray-400 dark:to-gray-100 bg-clip-text text-transparent">
-            Skills & Technologies
+            Tech Stack
           </motion.h3>
         </motion.div>
       </div>

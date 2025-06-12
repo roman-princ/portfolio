@@ -52,7 +52,28 @@ export default function Experience() {
 
         {/* Desktop Timeline */}
         <div className="hidden lg:block relative">
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-400 via-purple-500 to-indigo-600 dark:from-blue-300 dark:via-purple-400 dark:to-indigo-500 h-full rounded-full shadow-lg"></div>
+          <motion.div 
+            initial={{ height: 0 }}
+            whileInView={{ height: "100%" }}
+            viewport={{ once: true }}
+            transition={{ duration: 2, ease: "easeInOut" }}
+            className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-400 via-purple-500 to-indigo-600 dark:from-blue-300 dark:via-purple-400 dark:to-indigo-500 rounded-full shadow-lg">
+            <motion.div
+              animate={{ 
+                boxShadow: [
+                  "0 0 0 0 rgba(59, 130, 246, 0.4)",
+                  "0 0 0 10px rgba(59, 130, 246, 0)",
+                  "0 0 0 0 rgba(59, 130, 246, 0)"
+                ]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="w-full h-full rounded-full"
+            />
+          </motion.div>
           
           <div className="space-y-16">
             {EXPERIENCE.map((experience, index) => (
@@ -70,7 +91,28 @@ export default function Experience() {
                   <MobileExperienceCard key={experience.id} experience={experience} index={index} />
                 ))}
               </div>
-              <div className="absolute top-16 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 dark:from-blue-300 dark:via-purple-400 dark:to-indigo-500 rounded-full shadow-lg mx-4"></div>
+              <motion.div 
+                initial={{ width: 0 }}
+                whileInView={{ width: "calc(100% - 2rem)" }}
+                viewport={{ once: true }}
+                transition={{ duration: 2, ease: "easeInOut" }}
+                className="absolute top-16 left-4 h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 dark:from-blue-300 dark:via-purple-400 dark:to-indigo-500 rounded-full shadow-lg">
+                <motion.div
+                  animate={{ 
+                    boxShadow: [
+                      "0 0 0 0 rgba(59, 130, 246, 0.4)",
+                      "0 0 8px 0 rgba(59, 130, 246, 0.6)",
+                      "0 0 0 0 rgba(59, 130, 246, 0.4)"
+                    ]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="w-full h-full rounded-full"
+                />
+              </motion.div>
             </div>
           </div>
         </div>
@@ -107,11 +149,26 @@ function DesktopExperienceCard({ experience, index }: ExperienceCardProps) {
             {experience.period.split(' - ')[0]}
           </span>
         </motion.div>
-        <div className={`w-6 h-6 rounded-full border-4 border-white dark:border-gray-900 shadow-lg ${
-          experience.current 
-            ? "bg-gradient-to-r from-blue-500 to-purple-600" 
-            : "bg-gradient-to-r from-blue-400 to-indigo-500"
-        }`}></div>
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.2, 1],
+            boxShadow: [
+              "0 0 0 0 rgba(59, 130, 246, 0.4)",
+              "0 0 0 8px rgba(59, 130, 246, 0)",
+              "0 0 0 0 rgba(59, 130, 246, 0)"
+            ]
+          }}
+          transition={{ 
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: index * 0.3
+          }}
+          className={`w-6 h-6 rounded-full border-4 border-white dark:border-gray-900 shadow-lg ${
+            experience.current 
+              ? "bg-gradient-to-r from-blue-500 to-purple-600" 
+              : "bg-gradient-to-r from-blue-400 to-indigo-500"
+          }`}></motion.div>
       </motion.div>
 
       {/* Content Card */}
@@ -221,11 +278,26 @@ function MobileExperienceCard({ experience, index }: ExperienceCardProps) {
             {experience.period.split(' - ')[0]}
           </span>
         </div>
-        <div className={`w-8 h-8 rounded-full border-4 border-white dark:border-gray-900 shadow-lg ${
-          experience.current 
-            ? "bg-gradient-to-r from-blue-500 to-purple-600" 
-            : "bg-gradient-to-r from-blue-400 to-indigo-500"
-        }`}></div>
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.2, 1],
+            boxShadow: [
+              "0 0 0 0 rgba(59, 130, 246, 0.4)",
+              "0 0 0 12px rgba(59, 130, 246, 0)",
+              "0 0 0 0 rgba(59, 130, 246, 0)"
+            ]
+          }}
+          transition={{ 
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: index * 0.3
+          }}
+          className={`w-8 h-8 rounded-full border-4 border-white dark:border-gray-900 shadow-lg ${
+            experience.current 
+              ? "bg-gradient-to-r from-blue-500 to-purple-600" 
+              : "bg-gradient-to-r from-blue-400 to-indigo-500"
+          }`}></motion.div>
       </motion.div>
 
       {/* Content Card */}
@@ -297,43 +369,6 @@ interface ExpTechBadgeProps {
 }
 
 function ExpTechBadge({ tech, delay }: ExpTechBadgeProps) {
-  const getTechBadgeStyle = (technology: string) => {
-    const tech = technology.toLowerCase();
-    
-    // Frontend Technologies
-    if (tech.includes('react') || tech.includes('vue') || tech.includes('angular') || tech.includes('svelte') || tech.includes('next') || tech.includes('nuxt') || tech.includes('typescript') || tech.includes('javascript') || tech.includes('html') || tech.includes('css') || tech.includes('tailwind') || tech.includes('sass') || tech.includes('scss')) {
-      return "bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 shadow-md hover:shadow-lg";
-    }
-    
-    // Backend Technologies
-    if (tech.includes('node') || tech.includes('express') || tech.includes('fastify') || tech.includes('nest') || tech.includes('python') || tech.includes('django') || tech.includes('flask') || tech.includes('php') || tech.includes('laravel') || tech.includes('symfony') || tech.includes('java') || tech.includes('spring') || tech.includes('c#') || tech.includes('.net') || tech.includes('go') || tech.includes('rust') || tech.includes('ruby') || tech.includes('rails')) {
-      return "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white border-0 shadow-md hover:shadow-lg";
-    }
-    
-    // Mobile Technologies
-    if (tech.includes('react native') || tech.includes('flutter') || tech.includes('dart') || tech.includes('swift') || tech.includes('kotlin') || tech.includes('java') || tech.includes('xamarin') || tech.includes('ionic') || tech.includes('cordova') || tech.includes('capacitor')) {
-      return "bg-gradient-to-r from-purple-500 to-purple-600 text-white border-0 shadow-md hover:shadow-lg";
-    }
-    
-    // Database Technologies
-    if (tech.includes('mongodb') || tech.includes('mysql') || tech.includes('postgresql') || tech.includes('sqlite') || tech.includes('redis') || tech.includes('firebase') || tech.includes('supabase') || tech.includes('prisma') || tech.includes('sequelize') || tech.includes('mssql')) {
-      return "bg-gradient-to-r from-orange-500 to-orange-600 text-white border-0 shadow-md hover:shadow-lg";
-    }
-    
-    // Cloud & DevOps
-    if (tech.includes('aws') || tech.includes('azure') || tech.includes('gcp') || tech.includes('docker') || tech.includes('kubernetes') || tech.includes('terraform') || tech.includes('jenkins') || tech.includes('github actions') || tech.includes('gitlab ci') || tech.includes('heroku') || tech.includes('vercel') || tech.includes('netlify')) {
-      return "bg-gradient-to-r from-indigo-500 to-indigo-600 text-white border-0 shadow-md hover:shadow-lg";
-    }
-    
-    // Tools & Others
-    if (tech.includes('git') || tech.includes('webpack') || tech.includes('vite') || tech.includes('eslint') || tech.includes('prettier') || tech.includes('jest') || tech.includes('cypress') || tech.includes('storybook') || tech.includes('figma') || tech.includes('adobe') || tech.includes('graphql') || tech.includes('rest api') || tech.includes('pwa') || tech.includes('iot')) {
-      return "bg-gradient-to-r from-pink-500 to-pink-600 text-white border-0 shadow-md hover:shadow-lg";
-    }
-    
-    // Default gradient for unknown technologies
-    return "bg-gradient-to-r from-gray-500 to-gray-600 text-white border-0 shadow-md hover:shadow-lg";
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -351,13 +386,7 @@ function ExpTechBadge({ tech, delay }: ExpTechBadgeProps) {
         transition: { duration: 0.2 }
       }}
       whileTap={{ scale: 0.95 }}>
-      <div
-        className={`
-          inline-flex items-center rounded-full font-medium 
-          cursor-default transition-all duration-200 
-          px-2 py-1 text-xs
-          ${getTechBadgeStyle(tech)}
-        `}>
+      <div className="inline-flex items-center rounded-full font-medium cursor-default transition-all duration-200 px-2 py-1 text-xs glass-badge">
         {tech}
       </div>
     </motion.div>
@@ -365,43 +394,6 @@ function ExpTechBadge({ tech, delay }: ExpTechBadgeProps) {
 }
 
 function ExpTechBadgeMobile({ tech, delay }: ExpTechBadgeProps) {
-  const getTechBadgeStyle = (technology: string) => {
-    const tech = technology.toLowerCase();
-    
-    // Frontend Technologies
-    if (tech.includes('react') || tech.includes('vue') || tech.includes('angular') || tech.includes('svelte') || tech.includes('next') || tech.includes('nuxt') || tech.includes('typescript') || tech.includes('javascript') || tech.includes('html') || tech.includes('css') || tech.includes('tailwind') || tech.includes('sass') || tech.includes('scss')) {
-      return "bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 shadow-md hover:shadow-lg";
-    }
-    
-    // Backend Technologies
-    if (tech.includes('node') || tech.includes('express') || tech.includes('fastify') || tech.includes('nest') || tech.includes('python') || tech.includes('django') || tech.includes('flask') || tech.includes('php') || tech.includes('laravel') || tech.includes('symfony') || tech.includes('java') || tech.includes('spring') || tech.includes('c#') || tech.includes('.net') || tech.includes('go') || tech.includes('rust') || tech.includes('ruby') || tech.includes('rails')) {
-      return "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white border-0 shadow-md hover:shadow-lg";
-    }
-    
-    // Mobile Technologies
-    if (tech.includes('react native') || tech.includes('flutter') || tech.includes('dart') || tech.includes('swift') || tech.includes('kotlin') || tech.includes('java') || tech.includes('xamarin') || tech.includes('ionic') || tech.includes('cordova') || tech.includes('capacitor')) {
-      return "bg-gradient-to-r from-purple-500 to-purple-600 text-white border-0 shadow-md hover:shadow-lg";
-    }
-    
-    // Database Technologies
-    if (tech.includes('mongodb') || tech.includes('mysql') || tech.includes('postgresql') || tech.includes('sqlite') || tech.includes('redis') || tech.includes('firebase') || tech.includes('supabase') || tech.includes('prisma') || tech.includes('sequelize') || tech.includes('mssql')) {
-      return "bg-gradient-to-r from-orange-500 to-orange-600 text-white border-0 shadow-md hover:shadow-lg";
-    }
-    
-    // Cloud & DevOps
-    if (tech.includes('aws') || tech.includes('azure') || tech.includes('gcp') || tech.includes('docker') || tech.includes('kubernetes') || tech.includes('terraform') || tech.includes('jenkins') || tech.includes('github actions') || tech.includes('gitlab ci') || tech.includes('heroku') || tech.includes('vercel') || tech.includes('netlify')) {
-      return "bg-gradient-to-r from-indigo-500 to-indigo-600 text-white border-0 shadow-md hover:shadow-lg";
-    }
-    
-    // Tools & Others
-    if (tech.includes('git') || tech.includes('webpack') || tech.includes('vite') || tech.includes('eslint') || tech.includes('prettier') || tech.includes('jest') || tech.includes('cypress') || tech.includes('storybook') || tech.includes('figma') || tech.includes('adobe') || tech.includes('graphql') || tech.includes('rest api') || tech.includes('pwa') || tech.includes('iot')) {
-      return "bg-gradient-to-r from-pink-500 to-pink-600 text-white border-0 shadow-md hover:shadow-lg";
-    }
-    
-    // Default gradient for unknown technologies
-    return "bg-gradient-to-r from-gray-500 to-gray-600 text-white border-0 shadow-md hover:shadow-lg";
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -419,13 +411,7 @@ function ExpTechBadgeMobile({ tech, delay }: ExpTechBadgeProps) {
         transition: { duration: 0.2 }
       }}
       whileTap={{ scale: 0.95 }}>
-      <div
-        className={`
-          inline-flex items-center rounded-full font-medium 
-          cursor-default transition-all duration-200 
-          px-2 py-1 text-xs
-          ${getTechBadgeStyle(tech)}
-        `}>
+      <div className="inline-flex items-center rounded-full font-medium cursor-default transition-all duration-200 px-2 py-1 text-xs glass-badge">
         {tech}
       </div>
     </motion.div>

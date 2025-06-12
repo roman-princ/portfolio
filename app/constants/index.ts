@@ -71,7 +71,7 @@ export const PROJECTS: Project[] = [
       "PWA",
     ],
     github: "",
-    demo: "",
+    demo: "https://prod1.freshpoint.cz/end-user-ui",
     featured: true,
   },
   {
@@ -87,17 +87,7 @@ export const PROJECTS: Project[] = [
       "Firmware Updates",
     ],
     github: "",
-    demo: "",
-    featured: true,
-  },
-  {
-    id: "project-3",
-    title: "Excel Processing System",
-    description:
-      "Internal system for processing Excel files and displaying data in web interface. Full-stack development with Azure deployment.",
-    technologies: ["React", "C#", ".NET", "Azure", "MSSQL", "REST API"],
-    github: "",
-    demo: "",
+    demo: "https://apps.apple.com/cz/app/statotest/id6479359279?l=cs",
     featured: true,
   },
   {
@@ -107,7 +97,7 @@ export const PROJECTS: Project[] = [
       "CLI-controlled graphics editor utilizing Fourier Transform for fast filter application. Advanced mathematical algorithms implementation.",
     technologies: ["Python", "Fourier Transform", "Image Processing", "CLI"],
     github: "",
-    demo: "",
+    demo: "https://github.com/roman-princ/cli-image-editor",
     featured: false,
   },
   {
@@ -117,7 +107,7 @@ export const PROJECTS: Project[] = [
       "Personal Spotify statistics viewer with data visualization and user insights.",
     technologies: ["React", "Spotify API", "Data Visualization"],
     github: "",
-    demo: "",
+    demo: "https://spotiapp.princdev.com",
     featured: true,
   },
   {
@@ -126,8 +116,26 @@ export const PROJECTS: Project[] = [
     description:
       "High-performance Excel processing engine built from scratch in C++. Award-winning project that placed 5th nationally in SOČ competition.",
     technologies: ["C++", "Excel Processing", "Performance Optimization"],
-    github: "",
+    github: "https://github.com/roman-princ/cpp-excel",
     demo: "",
+    featured: true,
+  },
+  {
+    id: "project-7",
+    title: "Galvanika Čakovice presentation website",
+    description: "Company presentation website built with WordPress.",
+    technologies: ["WordPress", "PHP"],
+    github: "",
+    demo: "https://galvanika.cz",
+    featured: false,
+  },
+  {
+    id: "project-8",
+    title: "U Prutu - Food & drink pitstop near the Jablonec dam",
+    description: "Website for a food & drink business near the Jablonec dam.",
+    technologies: ["WordPress", "PHP"],
+    github: "",
+    demo: "https://uprutu.cz",
     featured: false,
   },
 ];
