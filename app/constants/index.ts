@@ -9,7 +9,7 @@ import {
 
 export const PERSONAL_INFO = {
   name: "Roman Princ",
-  tagline: "Playing with ones and zeros",
+  tagline: "Getting payed for writing colorful text",
   bio: "Full-stack developer and Software Engineering student at CTU Prague.",
   location: "Prague, Czech Republic",
   yearsOfExperience: 2,
@@ -19,9 +19,8 @@ export const CONTACT_INFO: ContactInfo = {
   email: "roman.princ00@gmail.com",
   location: "Prague, Czech Republic",
   linkedin: "https://www.linkedin.com/in/roman-princ-717a58244/",
-  github: "https://github.com/romanprinc",
-  twitter: "https://twitter.com/romanprinc",
-  website: "https://romanprinc.dev",
+  github: "https://github.com/roman-princ",
+  website: "https://portfolio.princdev.com",
 };
 
 export const SKILLS: Skill[] = [

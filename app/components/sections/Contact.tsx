@@ -5,7 +5,7 @@ import { CONTACT_INFO } from "@/app/constants";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MapPin, Github, Linkedin, Send, CheckCircle, AlertCircle } from "lucide-react";
+import { Mail, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { useCursorLight } from "@/app/hooks/useCursorLight";
 
@@ -100,66 +100,20 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="space-y-4">
-              <motion.div
-                whileHover={{ x: 5, transition: { duration: 0.2 } }}
-                className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer">
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ type: "spring", stiffness: 400 }}>
-                  <Mail className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-                </motion.div>
-                <a
-                  href={`mailto:${CONTACT_INFO.email}`}
-                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
+              className="space-y-6">
+              <div className="flex items-center gap-3">
+                <Mail className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+                <span className="text-gray-700 dark:text-gray-300">
                   {CONTACT_INFO.email}
-                </a>
-              </motion.div>
+                </span>
+              </div>
 
-              <motion.div
-                whileHover={{ x: 5, transition: { duration: 0.2 } }}
-                className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ type: "spring", stiffness: 400 }}>
-                  <MapPin className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-                </motion.div>
-                <span className="text-gray-600 dark:text-gray-300">
+              <div className="flex items-center gap-3">
+                <MapPin className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+                <span className="text-gray-700 dark:text-gray-300">
                   {CONTACT_INFO.location}
                 </span>
-              </motion.div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex gap-6 pt-4">
-              {CONTACT_INFO.github && (
-                <motion.a
-                  href={CONTACT_INFO.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.2, y: -3 }}
-                  whileTap={{ scale: 0.9 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <Github className="h-6 w-6" />
-                </motion.a>
-              )}
-              {CONTACT_INFO.linkedin && (
-                <motion.a
-                  href={CONTACT_INFO.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.2, y: -3 }}
-                  whileTap={{ scale: 0.9 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <Linkedin className="h-6 w-6" />
-                </motion.a>
-              )}
+              </div>
             </motion.div>
           </motion.div>
 

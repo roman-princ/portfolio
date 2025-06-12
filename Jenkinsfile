@@ -5,7 +5,9 @@ pipeline {
         DOCKER_IMAGE = "portfolio.princdev.com"
         DOCKER_TAG = "${BUILD_NUMBER}"
         CONTAINER_NAME = "portfolio.princdev.com"
-        APP_PORT = "8888"  // Change to your app's port
+        APP_PORT = "8888"
+        CONTAINER_PORT = "3000"  // Port exposed by the Next.js app
+        RESEND_API_KEY = credentials('resend-api-key')  // Jenkins credential for API key
     }
     
     stages {
@@ -19,6 +21,19 @@ pipeline {
                         credentialsId: 'github-credentials'  // Use the credential ID you created
                     ]]
                 ])
+            }
+        }
+        
+        stage('Check Docker') {
+            steps {
+                script {
+                    // Check if Docker is available
+                    def dockerAvailable = sh(script: 'which docker', returnStatus: true) == 0
+                    if (!dockerAvailable) {
+                        error("Docker is not installed or not available in PATH")
+                    }
+                    sh 'docker --version'
+                }
             }
         }
         
@@ -49,12 +64,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Run new container
+                    // Run new container with proper port mapping and environment variables
                     sh """
                         docker run -d \
                             --name ${CONTAINER_NAME} \
-                            -p ${APP_PORT}:${APP_PORT} \
+                            -p ${APP_PORT}:${CONTAINER_PORT} \
                             --restart unless-stopped \
+                            -e RESEND_API_KEY=\${RESEND_API_KEY} \
+                            -e NODE_ENV=production \
                             ${DOCKER_IMAGE}:latest
                     """
                 }

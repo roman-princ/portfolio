@@ -51,7 +51,11 @@ export default function Hero() {
             transition={{ type: "spring", stiffness: 400, damping: 17 }}>
             <Button
               size="lg"
-              className="text-lg px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all">
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                contactSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="text-lg px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all text-white">
               <Mail className="mr-2 h-5 w-5" />
               Get In Touch
             </Button>
@@ -63,6 +67,10 @@ export default function Hero() {
             <Button
               variant="outline"
               size="lg"
+              onClick={() => {
+                const projectsSection = document.getElementById('projects');
+                projectsSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
               className="text-lg px-8 py-3 border-2 hover:bg-gray-50 dark:hover:bg-gray-800 shadow-md hover:shadow-lg transition-all">
               View My Work
             </Button>
