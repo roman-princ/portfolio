@@ -7,7 +7,7 @@ import SmoothScroll from "./components/common/SmoothScroll";
 export const metadata: Metadata = {
   title: "Roman Princ - Software Engineering Student",
   description:
-    "Portfolio of Roman Princ, a passionate software engineering student specializing in modern web technologies.",
+    "Roman Princ's portfolio, a software engineering student specializing in modern web technologies and mobile development.",
   keywords: [
     "Roman Princ",
     "Software Engineering Student",
@@ -52,14 +52,14 @@ export const metadata: Metadata = {
     url: "https://portfolio.princdev.com",
     title: "Roman Princ - Software Engineering Student",
     description:
-      "Portfolio of Roman Princ, a passionate software engineering student specializing in modern web technologies.",
+      "Roman Princ's portfolio, a software engineering student specializing in modern web technologies and mobile development.",
     siteName: "Roman Princ",
   },
   twitter: {
     card: "summary_large_image",
     title: "Roman Princ - Software Engineering Student",
     description:
-      "Portfolio of Roman Princ, a passionate software engineering student specializing in modern web technologies.",
+      "Roman Princ's portfolio, a software engineering student specializing in modern web technologies and mobile development.",
   },
 };
 
