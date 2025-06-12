@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { PERSONAL_INFO } from "@/app/constants";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navigation = [
@@ -49,15 +48,15 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ 
+            animate={{
               opacity: isScrolled ? 1 : 0,
-              scale: isScrolled ? 1 : 0.8
+              scale: isScrolled ? 1 : 0.8,
             }}
             transition={{ duration: 0.3, ease: "easeOut" }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            className="text-2xl hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full p-2 transition-colors">
+            className="text-2xl rounded-full p-2 transition-colors">
             🏠
           </motion.button>
 
