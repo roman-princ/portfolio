@@ -25,9 +25,12 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copy all source code (excluding files in .dockerignore)
 COPY . .
 
+ARG RESEND_API_KEY
+
 # Set environment variable for production build
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV RESEND_API_KEY=${RESEND_API_KEY}
 
 # Build the application
 RUN npm run build
