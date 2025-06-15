@@ -114,26 +114,19 @@ function ProjectCard({ project, index, featured = false }: ProjectCardProps) {
       <div
         ref={cursorRef as any}
         className={`h-full glass-card cursor-light rounded-2xl p-6 transition-all duration-500 flex flex-col ${
-          featured ? "shadow-2xl hover:shadow-3xl" : "shadow-lg hover:shadow-xl"
+          featured
+            ? "shadow-2xl hover:shadow-3xl border-2 border-green-200/30 dark:border-green-400/30 bg-gradient-to-br from-green-50/50 via-emerald-50/50 to-teal-50/50 dark:from-green-900/20 dark:via-emerald-900/20 dark:to-teal-900/20"
+            : "shadow-lg hover:shadow-xl"
         }`}>
-        <div className="flex items-start justify-between mb-4">
+        <div className="mb-4">
           <motion.h3
             whileHover={{ x: 2 }}
             transition={{ duration: 0.2 }}
-            className="text-title font-semibold">
+            className={`text-title font-semibold ${
+              featured ? "text-green-900 dark:text-green-100 text-xl" : ""
+            }`}>
             {project.title}
           </motion.h3>
-          {featured && (
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: index * 0.2 + 0.5, type: "spring" }}
-              className="glass-badge px-2 py-1 rounded-full">
-              <span className="text-xs font-medium text-blue-600 dark:text-blue-400">
-                Featured
-              </span>
-            </motion.div>
-          )}
         </div>
 
         <p className="text-caption text-gray-600 dark:text-gray-300 mb-6 flex-grow">
