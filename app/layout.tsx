@@ -70,6 +70,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          defer
+          src="https://analytics.princdev.com/script.js"
+          data-website-id="987c635e-4251-4bf2-9db7-8736002863b8"></script>
+      </head>
       <body className="font-sf-pro antialiased">
         <Navigation />
         <ThemeToggle />
