@@ -10,7 +10,7 @@ import {
 export const PERSONAL_INFO = {
   name: "Roman Princ",
   tagline: "Getting payed for writing colorful text",
-  bio: "Full-stack developer and Software Engineering student at CTU Prague.",
+  bio: "Freelancer & Software Engineering student at CTU Prague.",
   location: "Prague, Czech Republic",
   yearsOfExperience: new Date().getFullYear() - 2022,
 };
@@ -77,7 +77,7 @@ export const PROJECTS: Project[] = [
     id: "project-2",
     title: "CHESTER IoT Management App",
     description:
-      "React Native mobile application for managing IoT gateways. Built from scratch with cross-platform support for Android and iOS.",
+      "React Native mobile application for managing IoT gateways. Built from scratch with cross-platform support for Android and iOS. Award-winning project that placed 5th nationally in SOČ competition.",
     technologies: [
       "React Native",
       "REST API",
@@ -113,7 +113,7 @@ export const PROJECTS: Project[] = [
     id: "project-6",
     title: "Excel Engine in C++",
     description:
-      "High-performance Excel processing engine built from scratch in C++. Award-winning project that placed 5th nationally in SOČ competition.",
+      "High-performance Excel processing engine built from scratch in C++.",
     technologies: ["C++", "Excel Processing", "Performance Optimization"],
     github: "https://github.com/roman-princ/cpp-excel",
     demo: "",
