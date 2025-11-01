@@ -7,7 +7,10 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 py-20 relative overflow-hidden">
+    <section
+      className="min-h-screen flex items-center justify-center px-4 py-20 relative overflow-hidden"
+      itemScope
+      itemType="https://schema.org/Person">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.05 }}
@@ -20,7 +23,8 @@ export default function Hero() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="text-display font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
+          className="text-display font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent"
+          itemProp="name">
           {PERSONAL_INFO.name}
         </motion.h1>
 
@@ -28,7 +32,8 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-          className="text-body text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+          className="text-body text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto"
+          itemProp="jobTitle">
           {PERSONAL_INFO.tagline}
         </motion.p>
 
@@ -36,7 +41,8 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-          className="text-caption text-gray-500 dark:text-gray-400 mb-12 max-w-3xl mx-auto">
+          className="text-caption text-gray-500 dark:text-gray-400 mb-12 max-w-3xl mx-auto"
+          itemProp="description">
           {PERSONAL_INFO.bio}
         </motion.p>
 
@@ -52,8 +58,8 @@ export default function Hero() {
             <Button
               size="lg"
               onClick={() => {
-                const contactSection = document.getElementById('contact');
-                contactSection?.scrollIntoView({ behavior: 'smooth' });
+                const contactSection = document.getElementById("contact");
+                contactSection?.scrollIntoView({ behavior: "smooth" });
               }}
               className="text-lg px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all text-white">
               <Mail className="mr-2 h-5 w-5" />
@@ -68,8 +74,8 @@ export default function Hero() {
               variant="outline"
               size="lg"
               onClick={() => {
-                const projectsSection = document.getElementById('projects');
-                projectsSection?.scrollIntoView({ behavior: 'smooth' });
+                const projectsSection = document.getElementById("projects");
+                projectsSection?.scrollIntoView({ behavior: "smooth" });
               }}
               className="text-lg px-8 py-3 border-2 hover:bg-gray-50 dark:hover:bg-gray-800 shadow-md hover:shadow-lg transition-all">
               View My Work
