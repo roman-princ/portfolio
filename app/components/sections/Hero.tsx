@@ -28,14 +28,14 @@ export default function Hero() {
           {PERSONAL_INFO.name}
         </motion.h1>
 
-        <motion.p
+        {/* <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
           className="text-body text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto"
           itemProp="jobTitle">
           {PERSONAL_INFO.tagline}
-        </motion.p>
+        </motion.p> */}
 
         <motion.p
           initial={{ opacity: 0, y: 30 }}

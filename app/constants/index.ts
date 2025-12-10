@@ -9,7 +9,6 @@ import {
 
 export const PERSONAL_INFO = {
   name: "Roman Princ",
-  tagline: "Getting paid for writing colorful text",
   bio: "Freelancer & Software Engineering student at CTU Prague.",
   location: "Prague, Czech Republic",
   yearsOfExperience: new Date().getFullYear() - 2022,
