@@ -1,5 +1,5 @@
-# Use the official Node.js 18 Alpine image
-FROM node:18-alpine AS base
+# Use the official Node.js 22 Alpine image
+FROM node:22-alpine AS base
 
 # Set working directory
 WORKDIR /app
@@ -10,10 +10,10 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 
 # Copy package files
-COPY package.json package-lock.json* ./
+COPY package.json yarn.lock .yarnrc ./
 
 # Install dependencies (including dev dependencies for build)
-RUN npm ci
+RUN yarn install --frozen-lockfile
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -33,7 +33,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV RESEND_API_KEY=${RESEND_API_KEY}
 
 # Build the application
-RUN npm run build
+RUN yarn build
 
 # Production image, copy all the files and run next
 FROM base AS runner

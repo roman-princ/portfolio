@@ -1,16 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { lenisRef } from "@/app/lib/scrollBus";
 
 const navigation = [
   { name: "About", href: "#about" },
   { name: "Experience", href: "#experience" },
-  { name: "Projects", href: "#projects" },
-  { name: "Certificates", href: "#certificates" },
-  { name: "Contact", href: "#contact" },
+  { name: "Work", href: "#projects" },
+  { name: "Certs", href: "#certificates" },
 ];
 
 export default function Navigation() {
@@ -18,117 +17,79 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      // Close mobile menu first
-      setIsOpen(false);
+    setIsOpen(false);
+    setTimeout(() => {
+      const lenis = lenisRef.current;
+      if (lenis) {
+        lenis.scrollTo(href, { offset: -72 });
+        return;
+      }
+      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    }, 200);
+  };
 
-      // Add slight delay for mobile menu animation to complete
-      setTimeout(() => {
-        // Get the navigation height to offset scroll position
-        const navHeight = document.querySelector("nav")?.offsetHeight || 0;
-        const elementPosition =
-          element.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = elementPosition - navHeight - 20; // Extra 20px padding
-
-        // Use different scroll methods for better mobile compatibility
-        if ("scrollTo" in window) {
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth",
-          });
-        } else {
-          // Fallback for older mobile browsers
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }, 300); // Wait for mobile menu close animation
-    } else {
-      setIsOpen(false);
-    }
+  const scrollToTop = () => {
+    const lenis = lenisRef.current;
+    if (lenis) lenis.scrollTo(0);
+    else window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        isScrolled || isOpen
-          ? "bg-white/60 dark:bg-gray-900/60 backdrop-blur-apple border-b border-gray-200/50 dark:border-gray-700/50 shadow-lg shadow-black/5"
-          : "bg-transparent"
-      }`}>
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{
-              opacity: isScrolled ? 1 : 0,
-              scale: isScrolled ? 1 : 0.8,
-            }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="text-2xl rounded-full p-2 transition-colors">
-            🏠
-          </motion.button>
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+      className="fixed top-4 inset-x-0 z-50 px-4"
+    >
+      <div
+        className={`max-w-3xl mx-auto rounded-2xl px-4 sm:px-6 transition-all duration-500 ${
+          isScrolled || isOpen
+            ? "bg-[#0b0618]/70 backdrop-blur-apple border border-white/10 shadow-lg shadow-purple-950/30"
+            : "bg-transparent border border-transparent"
+        }`}
+      >
+        <div className="flex items-center justify-between h-14">
+          <button
+            onClick={scrollToTop}
+            className="font-display font-bold text-lg tracking-tight text-white hover:text-gradient-neon transition-colors"
+          >
+            rp<span className="text-fuchsia-400">.</span>
+          </button>
 
-          <div className="hidden md:flex space-x-8 absolute left-1/2 transform -translate-x-1/2">
-            {navigation.map((item, index) => (
-              <motion.button
+          <div className="hidden md:flex items-center gap-7">
+            {navigation.map((item) => (
+              <button
                 key={item.name}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                whileHover={{
-                  scale: 1.05,
-                  transition: { duration: 0.2 },
-                }}
-                whileTap={{ scale: 0.95 }}
                 onClick={() => scrollToSection(item.href)}
-                className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors relative">
+                className="text-[13px] font-medium uppercase tracking-[0.18em] text-white/60 hover:text-white transition-colors"
+              >
                 {item.name}
-                <motion.div
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900 dark:bg-white"
-                  initial={{ scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              </motion.button>
+              </button>
             ))}
           </div>
 
-          <div className="hidden md:block w-24"></div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => scrollToSection("#contact")}
+              className="hidden md:inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[13px] font-semibold uppercase tracking-[0.14em] text-white bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 transition-all shadow-lg shadow-fuchsia-900/40"
+            >
+              Hire me
+            </button>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="md:hidden">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsOpen(!isOpen)}>
-              <motion.div
-                animate={{ rotate: isOpen ? 180 : 0 }}
-                transition={{ duration: 0.3 }}>
-                {isOpen ? (
-                  <X className="h-5 w-5" />
-                ) : (
-                  <Menu className="h-5 w-5" />
-                )}
-              </motion.div>
-            </Button>
-          </motion.div>
+            <button
+              className="md:hidden p-2 text-white/80 hover:text-white"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
 
         <AnimatePresence>
@@ -138,32 +99,25 @@ export default function Navigation() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:hidden overflow-hidden">
-              <motion.div
-                initial={{ y: -10 }}
-                animate={{ y: 0 }}
-                exit={{ y: -10 }}
-                transition={{ duration: 0.2 }}
-                className="px-2 pt-2 pb-3 space-y-1 light:bg-white dark:bg-transparent border-t border-gray-200 dark:border-gray-700">
-                {navigation.map((item, index) => (
-                  <motion.button
-                    key={item.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.2, delay: index * 0.1 }}
-                    whileHover={{
-                      scale: 1.02,
-                      x: 5,
-                      transition: { duration: 0.2 },
-                    }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => scrollToSection(item.href)}
-                    className="block w-full text-left px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
-                    {item.name}
-                  </motion.button>
-                ))}
-              </motion.div>
+              className="md:hidden overflow-hidden"
+            >
+              <div className="py-3 space-y-1 border-t border-white/10">
+                {[...navigation, { name: "Contact", href: "#contact" }].map(
+                  (item, index) => (
+                    <motion.button
+                      key={item.name}
+                      initial={{ opacity: 0, x: -16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -16 }}
+                      transition={{ duration: 0.2, delay: index * 0.06 }}
+                      onClick={() => scrollToSection(item.href)}
+                      className="block w-full text-left px-3 py-2.5 text-sm uppercase tracking-[0.18em] text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                    >
+                      {item.name}
+                    </motion.button>
+                  )
+                )}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

@@ -6,7 +6,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-grotesk), -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -100,7 +100,7 @@
 }
 
 .dark {
-  --background: oklch(0.147 0.004 49.25);
+  --background: oklch(0.135 0.035 295);
   --foreground: oklch(0.985 0.001 106.423);
   --card: oklch(0.216 0.006 56.043);
   --card-foreground: oklch(0.985 0.001 106.423);
@@ -230,8 +230,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Lenis drives scrolling — native smooth behavior would fight it */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 /* Custom Apple-like blur effects */
@@ -325,4 +339,151 @@ html {
     rgba(255, 255, 255, 0.015) 40%,
     transparent 80%
   );
+}
+
+/* ============================================================
+   Neon portfolio layer
+   ============================================================ */
+
+.font-display {
+  font-family: var(--font-syne), var(--font-sans);
+}
+
+/* Headline gradients */
+.text-gradient-neon {
+  background: linear-gradient(100deg, #22d3ee 0%, #a78bfa 45%, #f472b6 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.text-gradient-soft {
+  background: linear-gradient(120deg, #f5f3ff 10%, #c4b5fd 55%, #818cf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Hollow outline headline (the second hero line) */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(196, 181, 253, 0.55);
+}
+
+@media (max-width: 768px) {
+  .text-outline {
+    -webkit-text-stroke-width: 1.2px;
+  }
+}
+
+/* Aurora backdrop behind the WebGL canvas */
+.aurora {
+  background:
+    radial-gradient(55% 40% at 18% 8%, rgba(124, 58, 237, 0.22) 0%, transparent 70%),
+    radial-gradient(45% 35% at 85% 20%, rgba(34, 211, 238, 0.13) 0%, transparent 70%),
+    radial-gradient(50% 45% at 75% 85%, rgba(244, 114, 182, 0.12) 0%, transparent 70%),
+    radial-gradient(60% 50% at 15% 90%, rgba(99, 102, 241, 0.16) 0%, transparent 70%);
+}
+
+/* Film grain to kill banding on the gradients */
+.noise::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Infinite marquee bands */
+.marquee-track {
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-reverse {
+  animation-direction: reverse;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* Neon-edged glass card */
+.neon-card {
+  position: relative;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 60%),
+    rgba(19, 12, 38, 0.82);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.neon-card:hover {
+  border-color: rgba(167, 139, 250, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(167, 139, 250, 0.15),
+    0 12px 48px rgba(124, 58, 237, 0.22),
+    0 2px 12px rgba(34, 211, 238, 0.1);
+}
+
+/* Pulsing availability dot */
+.pulse-dot {
+  position: relative;
+}
+
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: inherit;
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Selection + scrollbar tuned to the palette */
+::selection {
+  background: rgba(167, 139, 250, 0.4);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: oklch(0.135 0.035 295);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #7c3aed, #db2777);
+  border-radius: 8px;
+  border: 2px solid oklch(0.135 0.035 295);
 }

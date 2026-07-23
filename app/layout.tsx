@@ -1,8 +1,21 @@
 import type { Metadata } from "next";
+import { Syne, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/common/Navigation";
-import ThemeToggle from "./components/common/ThemeToggle";
 import SmoothScroll from "./components/common/SmoothScroll";
+
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-syne",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-grotesk",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://portfolio.princdev.com"),
@@ -254,14 +267,19 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" itemScope itemType="https://schema.org/WebPage">
+    <html
+      lang="en"
+      itemScope
+      itemType="https://schema.org/WebPage"
+      className={`dark ${syne.variable} ${spaceGrotesk.variable}`}
+    >
       <head>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
-        <meta name="theme-color" content="#ffffff" />
-        <meta name="color-scheme" content="light dark" />
+        <meta name="theme-color" content="#0b0618" />
+        <meta name="color-scheme" content="dark" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link
           rel="apple-touch-icon"
@@ -300,9 +318,9 @@ export default function RootLayout({
           src="https://analytics.princdev.com/script.js"
           data-website-id="987c635e-4251-4bf2-9db7-8736002863b8"></script>
       </head>
-      <body className="font-sf-pro antialiased">
+      <body className="font-sf-pro antialiased noise">
+        <div className="aurora fixed inset-0 -z-10" aria-hidden />
         <Navigation />
-        <ThemeToggle />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

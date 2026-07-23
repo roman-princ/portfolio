@@ -4,8 +4,8 @@
   "description": "Roman Princ - Full Stack Developer & Software Engineering Student portfolio website",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#3b82f6",
+  "background_color": "#0b0618",
+  "theme_color": "#a78bfa",
   "orientation": "portrait-primary",
   "icons": [
     {
