@@ -104,8 +104,8 @@ export default function About() {
             className="md:col-span-3 space-y-5 text-white/65 text-base md:text-lg leading-relaxed"
           >
             <p>
-              I&apos;m Roman — freelancer and Software Engineering student at
-              CTU Prague. For the last {PERSONAL_INFO.yearsOfExperience}+ years
+              I&apos;m Roman Princ — freelancer and Software Engineering
+              student at CTU Prague. For the last {PERSONAL_INFO.yearsOfExperience}+ years
               I&apos;ve been the person companies call when an idea needs to
               become a product: web, mobile, backend, infrastructure — the
               whole pipeline.

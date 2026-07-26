@@ -55,7 +55,7 @@ export default function Hero() {
             className="block text-[clamp(3.5rem,14vw,11rem)] text-gradient-soft"
           >
             ROMAN
-          </motion.span>
+          </motion.span>{" "}
           <motion.span
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
