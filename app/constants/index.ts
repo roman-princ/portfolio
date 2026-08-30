@@ -56,6 +56,23 @@ export const SKILLS: Skill[] = [
 
 export const PROJECTS: Project[] = [
   {
+    id: "project-9",
+    title: "Powderline — Browser Snowboarding Game",
+    description:
+      "Endless alpine snowboarding game running entirely in the browser. Terrain, trees, rider and audio are all procedurally generated — no assets to load. Features trick physics with graded landings, rails and kickers, 1v1 multiplayer races, quests, a shop and online leaderboards.",
+    technologies: [
+      "Three.js",
+      "React",
+      "Vite",
+      "Supabase",
+      "WebRTC",
+      "Procedural Generation",
+    ],
+    github: "",
+    demo: "https://powderlinegame.com",
+    featured: true,
+  },
+  {
     id: "project-1",
     title: "FreshPoint B2C Application",
     description:
@@ -105,7 +122,7 @@ export const PROJECTS: Project[] = [
       "Personal Spotify statistics viewer with data visualization and user insights.",
     technologies: ["React", "Spotify API", "Data Visualization"],
     github: "",
-    demo: "https://spotiapp.princdev.com",
+    demo: "https://spotiappv2.princdev.com",
     featured: true,
   },
   {
