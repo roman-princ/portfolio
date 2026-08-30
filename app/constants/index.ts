@@ -72,23 +72,7 @@ export const PROJECTS: Project[] = [
     demo: "https://powderlinegame.com",
     featured: true,
   },
-  {
-    id: "project-1",
-    title: "FreshPoint B2C Application",
-    description:
-      "Full-stack B2C application with cross-platform mobile support. Led development and infrastructure design, working directly with sales team.",
-    technologies: [
-      "Angular",
-      "Ionic",
-      "Node.js",
-      "TypeScript",
-      "Capacitor",
-      "PWA",
-    ],
-    github: "",
-    demo: "https://prod1.freshpoint.cz/end-user-ui",
-    featured: true,
-  },
+
   {
     id: "project-2",
     title: "CHESTER IoT Management App",
@@ -103,7 +87,7 @@ export const PROJECTS: Project[] = [
     ],
     github: "",
     demo: "https://apps.apple.com/cz/app/statotest/id6479359279?l=cs",
-    featured: true,
+    featured: false,
   },
   {
     id: "project-4",
@@ -134,24 +118,6 @@ export const PROJECTS: Project[] = [
     github: "https://github.com/roman-princ/cpp-excel",
     demo: "",
     featured: true,
-  },
-  {
-    id: "project-7",
-    title: "Galvanika Čakovice presentation website",
-    description: "Company presentation website built with WordPress.",
-    technologies: ["WordPress", "PHP"],
-    github: "",
-    demo: "https://galvanika.cz",
-    featured: false,
-  },
-  {
-    id: "project-8",
-    title: "U Prutu - Food & drink pitstop near the Jablonec dam",
-    description: "Website for a food & drink business near the Jablonec dam.",
-    technologies: ["WordPress", "PHP"],
-    github: "",
-    demo: "https://uprutu.cz",
-    featured: false,
   },
 ];
 
