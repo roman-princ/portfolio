@@ -1,207 +1,164 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  Mail,
-  MapPin,
-  Send,
-  CheckCircle,
-  AlertCircle,
-  Github,
-  Linkedin,
-} from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUp, ArrowUpRight } from "lucide-react";
 import { CONTACT_INFO } from "@/app/constants";
+import { scrollToTarget } from "@/app/lib/scroll";
+import { easeOut, Reveal } from "../common/Reveal";
 
-const easeOut = [0.16, 1, 0.3, 1] as const;
+type Status = "idle" | "sending" | "success" | "error";
+
+const SEND_LABEL: Record<Status, string> = {
+  idle: "Send message",
+  sending: "Sending…",
+  success: "Sent. Talk soon.",
+  error: "That failed. Email me instead.",
+};
+
+/** The address, big; a click copies it, and it says so. */
+function CopyEmail() {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(CONTACT_INFO.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      window.location.href = `mailto:${CONTACT_INFO.email}`;
+    }
+  };
+  return (
+    <button onClick={copy} className="group block text-left" aria-label={`Copy ${CONTACT_INFO.email}`}>
+      <span className="title draw block break-all pb-1 text-[clamp(1.5rem,3.6vw,2.75rem)]">{CONTACT_INFO.email}</span>
+      <span className="mt-2 inline-flex h-5 overflow-hidden text-sm text-muted">
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.span
+            key={String(copied)}
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-100%" }}
+            transition={{ duration: 0.45, ease: easeOut }}
+            className={copied ? "text-ink" : ""}
+          >
+            {copied ? "Copied to your clipboard ✓" : "Click to copy"}
+          </motion.span>
+        </AnimatePresence>
+      </span>
+    </button>
+  );
+}
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [submitStatus, setSubmitStatus] = useState<
-    "idle" | "sending" | "success" | "error"
-  >("idle");
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<Status>("idle");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (submitStatus !== "idle") return;
-    setSubmitStatus("sending");
+    if (status !== "idle") return;
+    setStatus("sending");
     try {
       const response = await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(form),
       });
-      setSubmitStatus(response.ok ? "success" : "error");
+      setStatus(response.ok ? "success" : "error");
     } catch {
-      setSubmitStatus("error");
+      setStatus("error");
     }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const change = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
-  const inputClasses =
-    "w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white placeholder:text-white/35 focus:outline-none focus:border-fuchsia-400/60 focus:bg-white/[0.06] transition-all";
+  const field =
+    "w-full border-b border-line-strong bg-transparent py-3 text-lg text-ink placeholder:text-dim transition-colors focus:border-white focus:outline-none";
 
   return (
-    <section id="contact" className="relative py-28 px-4">
-      <div className="max-w-6xl mx-auto">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: easeOut }}
-          className="text-xs font-medium uppercase tracking-[0.3em] text-fuchsia-400/80 mb-4"
-        >
-          05 — Contact
-        </motion.p>
+    <section id="contact" className="px-5 pt-24 md:px-8 md:pt-32">
+      <div className="mx-auto max-w-6xl">
+        <Reveal className="mb-5 flex items-center gap-3 text-sm text-muted">
+          <span className="font-mono text-dim">05</span>
+          <span className="h-px w-8 bg-line-strong" />
+          <span>Contact</span>
+        </Reveal>
+        <Reveal delay={0.05}>
+          <h2 className="display mb-16 text-[clamp(3.25rem,10vw,8.5rem)] md:mb-24">
+            Let&apos;s build
+            <br />
+            something
+            <br />
+            <span className="text-muted">people remember.</span>
+          </h2>
+        </Reveal>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease: easeOut }}
-          className="font-display text-[clamp(2.6rem,8vw,6rem)] font-extrabold tracking-tight leading-[1.02] text-white mb-16"
-        >
-          Let&apos;s build something
-          <br />
-          <span className="text-gradient-neon">people remember.</span>
-        </motion.h2>
-
-        <div className="grid md:grid-cols-2 gap-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, ease: easeOut, delay: 0.1 }}
-            className="space-y-8"
-          >
-            <p className="text-base md:text-lg text-white/65 leading-relaxed max-w-md">
-              Got a product to launch, an app to rescue, or an idea that needs
-              an engineer who actually ships? My inbox is open — first reply is
-              usually same-day.
+        <div className="grid gap-16 md:grid-cols-12 md:gap-8">
+          <Reveal className="space-y-10 md:col-span-6">
+            <p className="max-w-md text-lg leading-relaxed text-muted">
+              Got a product to launch, an app to rescue, or an idea that needs an engineer who actually ships? My inbox is
+              open, and the first reply is usually the same day.
             </p>
-
-            <a
-              href={`mailto:${CONTACT_INFO.email}`}
-              className="group inline-flex items-center gap-3 text-lg md:text-2xl font-display font-bold text-white hover:text-gradient-neon transition-all"
-            >
-              <Mail className="h-6 w-6 text-fuchsia-400" />
-              {CONTACT_INFO.email}
-            </a>
-
-            <div className="flex items-center gap-3 text-white/50 text-sm">
-              <MapPin className="h-4 w-4" />
-              {CONTACT_INFO.location} — working worldwide, remote-first
-            </div>
-
-            <div className="flex gap-2 pt-2">
-              {[
-                { href: CONTACT_INFO.github, icon: Github, label: "GitHub" },
-                {
-                  href: CONTACT_INFO.linkedin,
-                  icon: Linkedin,
-                  label: "LinkedIn",
-                },
-              ].map(({ href, icon: Icon, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="p-3 rounded-full text-white/50 hover:text-white bg-white/[0.04] hover:bg-white/10 border border-white/10 transition-all"
-                >
-                  <Icon className="h-5 w-5" />
+            <CopyEmail />
+            <div className="space-y-2 text-muted">
+              <p>{CONTACT_INFO.location}, working worldwide, remote-first</p>
+              <div className="flex gap-6">
+                <a href={CONTACT_INFO.github} target="_blank" rel="noopener noreferrer" className="draw pb-0.5 transition-colors hover:text-ink">
+                  GitHub
                 </a>
-              ))}
+                <a href={CONTACT_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="draw pb-0.5 transition-colors hover:text-ink">
+                  LinkedIn
+                </a>
+                <a href={`mailto:${CONTACT_INFO.email}`} className="draw pb-0.5 transition-colors hover:text-ink">
+                  Open in Mail
+                </a>
+              </div>
             </div>
-          </motion.div>
+          </Reveal>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, ease: easeOut, delay: 0.2 }}
-          >
-            <form
-              onSubmit={handleSubmit}
-              className="neon-card rounded-3xl p-7 md:p-9 space-y-5"
-            >
-              <h3 className="font-display text-xl font-bold text-white mb-1">
-                Send a message
-              </h3>
-              <input
-                type="text"
-                name="name"
-                placeholder="Your name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className={inputClasses}
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Your email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className={inputClasses}
-              />
-              <textarea
-                name="message"
-                placeholder="Tell me about your project…"
-                value={formData.message}
-                onChange={handleChange}
-                rows={5}
-                required
-                className={`${inputClasses} resize-none`}
-              />
+          <Reveal delay={0.1} className="md:col-span-5 md:col-start-8">
+            <form onSubmit={submit} className="space-y-8">
+              <label className="block">
+                <span className="text-sm text-dim">Name</span>
+                <input type="text" name="name" value={form.name} onChange={change} required autoComplete="name" placeholder="Jane Doe" className={field} />
+              </label>
+              <label className="block">
+                <span className="text-sm text-dim">Email</span>
+                <input type="email" name="email" value={form.email} onChange={change} required autoComplete="email" placeholder="jane@company.com" className={field} />
+              </label>
+              <label className="block">
+                <span className="text-sm text-dim">Project</span>
+                <textarea name="message" value={form.message} onChange={change} required rows={4} placeholder="Tell me what you're building" className={`${field} resize-none`} />
+              </label>
               <button
                 type="submit"
-                disabled={submitStatus !== "idle"}
-                className={`w-full inline-flex items-center justify-center gap-2 rounded-xl px-6 py-4 font-semibold text-white transition-all ${
-                  submitStatus === "success"
-                    ? "bg-emerald-500/20 text-emerald-300 border border-emerald-400/40"
-                    : submitStatus === "error"
-                      ? "bg-red-500/20 text-red-300 border border-red-400/40"
-                      : "bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 shadow-lg shadow-fuchsia-900/40 hover:-translate-y-0.5"
-                } ${submitStatus !== "idle" ? "cursor-not-allowed" : ""}`}
+                disabled={status !== "idle"}
+                className={`group inline-flex items-center gap-2 rounded-full px-7 py-4 font-medium transition-all duration-300 ${
+                  status === "idle"
+                    ? "bg-white text-black hover:scale-[1.03] active:scale-95"
+                    : status === "sending"
+                      ? "cursor-wait bg-white/80 text-black"
+                      : "cursor-default border border-line-strong text-ink"
+                }`}
+                aria-live="polite"
               >
-                {submitStatus === "sending" && (
-                  <>
-                    <Send className="h-4 w-4 animate-pulse" /> Sending…
-                  </>
-                )}
-                {submitStatus === "success" && (
-                  <>
-                    <CheckCircle className="h-4 w-4" /> Message sent — talk soon!
-                  </>
-                )}
-                {submitStatus === "error" && (
-                  <>
-                    <AlertCircle className="h-4 w-4" /> Failed — email me
-                    directly
-                  </>
-                )}
-                {submitStatus === "idle" && (
-                  <>
-                    <Send className="h-4 w-4" /> Send it
-                  </>
+                {SEND_LABEL[status]}
+                {status === "idle" && (
+                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
                 )}
               </button>
             </form>
-          </motion.div>
+          </Reveal>
         </div>
       </div>
 
-      <footer className="max-w-6xl mx-auto mt-28 pt-8 border-t border-white/[0.07] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/35 uppercase tracking-[0.2em]">
-        <span>© {new Date().getFullYear()} Roman Princ — Prague</span>
-        <span>Next.js ✦ Three.js ✦ Too much coffee</span>
+      <footer className="mx-auto mt-32 flex max-w-6xl flex-col gap-4 border-t border-line py-8 text-sm text-dim sm:flex-row sm:items-center sm:justify-between md:mt-44">
+        <span>© {new Date().getFullYear()} Roman Princ</span>
+        <span>Designed and built in Prague</span>
+        <button onClick={() => scrollToTarget(0)} className="group inline-flex items-center gap-2 transition-colors hover:text-ink">
+          Back to the top
+          <ArrowUp className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1" />
+        </button>
       </footer>
     </section>
   );

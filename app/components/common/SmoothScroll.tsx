@@ -2,50 +2,27 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
-import { scrollBus, lenisRef } from "@/app/lib/scrollBus";
+import { MotionConfig } from "framer-motion";
+import { lenisRef } from "@/app/lib/scroll";
 
-interface SmoothScrollProps {
-  children: React.ReactNode;
-}
-
-export default function SmoothScroll({ children }: SmoothScrollProps) {
+/** The page scrolls smoothly (Lenis), unless the visitor asked for less motion, which every animation follows too. */
+export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    const updateProgress = () => {
-      const limit = document.documentElement.scrollHeight - window.innerHeight;
-      scrollBus.progress = limit > 0 ? window.scrollY / limit : 0;
-    };
-    updateProgress();
-    window.addEventListener("scroll", updateProgress, { passive: true });
-    window.addEventListener("resize", updateProgress);
-
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-    let lenis: Lenis | null = null;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const lenis = new Lenis({ lerp: 0.1, touchMultiplier: 1.3 });
+    lenisRef.current = lenis;
     let raf = 0;
-
-    if (!prefersReduced) {
-      lenis = new Lenis({ lerp: 0.09, touchMultiplier: 1.4 });
-      lenisRef.current = lenis;
-      lenis.on("scroll", (e: { velocity: number }) => {
-        scrollBus.velocity = e.velocity;
-      });
-      const loop = (time: number) => {
-        lenis?.raf(time);
-        raf = requestAnimationFrame(loop);
-      };
+    const loop = (time: number) => {
+      lenis.raf(time);
       raf = requestAnimationFrame(loop);
-    }
-
+    };
+    raf = requestAnimationFrame(loop);
     return () => {
-      window.removeEventListener("scroll", updateProgress);
-      window.removeEventListener("resize", updateProgress);
       cancelAnimationFrame(raf);
-      lenis?.destroy();
+      lenis.destroy();
       lenisRef.current = null;
     };
   }, []);
 
-  return <>{children}</>;
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
 }

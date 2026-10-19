@@ -1,106 +1,82 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { Plus } from "lucide-react";
 import { EXPERIENCE } from "@/app/constants";
-
-const easeOut = [0.16, 1, 0.3, 1] as const;
+import { Reveal, SectionHead } from "../common/Reveal";
 
 export default function Experience() {
+  // the current job opens with the page; a row opens and closes on a click
+  const [open, setOpen] = useState<string | null>(EXPERIENCE[0]?.id ?? null);
+
   return (
-    <section id="experience" className="relative py-28 px-4">
-      <div className="max-w-5xl mx-auto">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: easeOut }}
-          className="text-xs font-medium uppercase tracking-[0.3em] text-cyan-400/80 mb-4"
-        >
-          02 — Experience
-        </motion.p>
+    <section id="experience" className="px-5 py-24 md:px-8 md:py-32">
+      <div className="mx-auto max-w-6xl">
+        <SectionHead index="03" label="Experience">
+          Where I&apos;ve shipped.
+        </SectionHead>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease: easeOut }}
-          className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-16"
-        >
-          Where I&apos;ve
-          <span className="text-gradient-neon"> shipped.</span>
-        </motion.h2>
-
-        <div className="relative">
-          {/* timeline spine */}
-          <div className="absolute left-[7px] md:left-[9px] top-2 bottom-2 w-px bg-gradient-to-b from-cyan-400/60 via-violet-500/40 to-fuchsia-500/60" />
-
-          <div className="space-y-10">
-            {EXPERIENCE.map((job, index) => (
-              <motion.article
-                key={job.id}
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.7, ease: easeOut, delay: 0.05 * index }}
-                className="relative pl-10 md:pl-14"
-              >
-                {/* timeline dot */}
-                <span
-                  className={`absolute left-0 md:left-[2px] top-2 h-4 w-4 rounded-full border-2 ${
-                    job.current
-                      ? "pulse-dot bg-emerald-400 border-emerald-300"
-                      : "bg-[#0b0618] border-violet-400/60"
-                  }`}
-                />
-
-                <div className="neon-card rounded-2xl p-6 md:p-8">
-                  <div className="flex flex-wrap items-baseline justify-between gap-2 mb-1">
-                    <h3 className="font-display text-xl md:text-2xl font-bold text-white">
-                      {job.position}
-                    </h3>
-                    <span className="text-xs font-medium uppercase tracking-[0.18em] text-white/40 tabular-nums">
-                      {job.period}
+        <ul className="border-t border-line">
+          {EXPERIENCE.map((job, i) => {
+            const isOpen = open === job.id;
+            return (
+              <li key={job.id} className="border-b border-line">
+                <Reveal y={16} delay={0.04 * i}>
+                  <button
+                    onClick={() => setOpen(isOpen ? null : job.id)}
+                    aria-expanded={isOpen}
+                    className="group grid w-full grid-cols-[1fr_auto] items-center gap-x-6 gap-y-2 py-7 text-left md:grid-cols-12 md:gap-8"
+                  >
+                    <span className="col-span-2 flex items-center gap-2 text-sm tabular-nums text-dim md:col-span-3">
+                      {job.current && <span className="pulse-dot" />}
+                      {job.period.replace(" - ", " — ")}
                     </span>
-                  </div>
-
-                  <div className="flex items-center gap-3 mb-5">
-                    <span className="text-sm md:text-base text-gradient-neon font-semibold">
-                      {job.company}
-                    </span>
-                    {job.current && (
-                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-300 bg-emerald-400/10 border border-emerald-400/30 rounded-full px-2.5 py-0.5">
-                        Now
+                    <span className="md:col-span-8">
+                      <span className="title block text-2xl transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-1.5 md:text-3xl">
+                        {job.position}
                       </span>
-                    )}
-                  </div>
-
-                  <ul className="space-y-2 mb-6">
-                    {job.description.map((line, i) => (
-                      <li
-                        key={i}
-                        className="text-sm md:text-[15px] text-white/60 leading-relaxed flex gap-3"
-                      >
-                        <span className="text-fuchsia-400/70 mt-0.5">▹</span>
-                        {line}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="flex flex-wrap gap-2">
-                    {job.technologies.map((tech) => (
+                      <span className="mt-1 block text-muted">{job.company}</span>
+                    </span>
+                    <span className="flex justify-end md:col-span-1">
                       <span
-                        key={tech}
-                        className="text-[11px] font-medium uppercase tracking-[0.12em] text-white/55 border border-white/10 bg-white/[0.03] rounded-full px-3 py-1"
+                        className={`grid h-10 w-10 place-items-center rounded-full border transition-all duration-500 ease-[var(--ease-out-expo)] ${
+                          isOpen ? "rotate-45 border-white bg-white text-black" : "border-line-strong text-ink group-hover:border-white"
+                        }`}
                       >
-                        {tech}
+                        <Plus className="h-4 w-4" />
                       </span>
-                    ))}
+                    </span>
+                  </button>
+                  {/* closed, the details stay in the page (for search engines too), folded to no height */}
+                  <div
+                    className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[var(--ease-out-expo)] ${
+                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    }`}
+                    inert={!isOpen}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="grid pb-9 md:grid-cols-12 md:gap-8">
+                        <div className="md:col-span-8 md:col-start-4">
+                          <ul className="mb-6 space-y-2.5 text-muted">
+                            {job.description.map((line) => (
+                              <li key={line} className="flex gap-3 leading-relaxed">
+                                <span className="mt-[0.7em] h-px w-3 shrink-0 bg-dim" />
+                                {line}
+                              </li>
+                            ))}
+                          </ul>
+                          <p className="font-mono text-xs uppercase tracking-[0.08em] text-dim">
+                            {job.technologies.join("  ·  ")}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
+                </Reveal>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

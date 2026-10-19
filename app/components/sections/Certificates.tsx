@@ -1,113 +1,56 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Award, ExternalLink, Trophy } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { CERTIFICATES } from "@/app/constants";
-
-const easeOut = [0.16, 1, 0.3, 1] as const;
+import { Reveal, SectionHead } from "../common/Reveal";
 
 export default function Certificates() {
+  const award = CERTIFICATES.find((c) => c.issuer === "SOČ");
+  const certs = CERTIFICATES.filter((c) => c !== award);
+
   return (
-    <section id="certificates" className="relative py-28 px-4">
-      <div className="max-w-6xl mx-auto">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: easeOut }}
-          className="text-xs font-medium uppercase tracking-[0.3em] text-emerald-400/80 mb-4"
-        >
-          04 — Credentials
-        </motion.p>
+    <section id="certificates" className="px-5 py-24 md:px-8 md:py-32">
+      <div className="mx-auto max-w-6xl">
+        <SectionHead index="04" label="Recognition">
+          Proof, stamped.
+        </SectionHead>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease: easeOut }}
-          className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-16"
-        >
-          Proof,
-          <span className="text-gradient-neon"> stamped.</span>
-        </motion.h2>
+        {award && (
+          <Reveal className="mb-16 grid gap-6 border-y border-line py-10 md:grid-cols-12 md:gap-8 md:py-14">
+            <span className="display text-[clamp(5rem,12vw,9rem)] md:col-span-3">5th</span>
+            <div className="md:col-span-8 md:col-start-5 md:self-center">
+              <p className="title mb-3 text-[clamp(1.5rem,2.8vw,2.25rem)]">{award.name}</p>
+              <p className="text-muted">
+                {award.issuer} {award.issueDate} · {award.skills.join(", ")}
+              </p>
+            </div>
+          </Reveal>
+        )}
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {CERTIFICATES.map((cert, index) => {
-            const isAward = cert.issuer === "SOČ";
-            const Wrapper = cert.link ? "a" : "div";
-            return (
-              <motion.div
-                key={cert.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{
-                  duration: 0.6,
-                  ease: easeOut,
-                  delay: (index % 3) * 0.08,
-                }}
-                className={isAward ? "sm:col-span-2 lg:col-span-3" : ""}
-              >
-                <Wrapper
-                  {...(cert.link
-                    ? {
-                        href: cert.link,
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                      }
-                    : {})}
-                  className={`group neon-card rounded-2xl p-6 flex flex-col h-full ${
-                    isAward
-                      ? "md:flex-row md:items-center gap-5 border-amber-300/20"
-                      : ""
-                  }`}
+        <ul className="grid gap-x-12 md:grid-cols-2">
+          {certs.map((cert, i) => (
+            <li key={cert.id} className="border-b border-line">
+              <Reveal y={14} delay={0.04 * (i % 2)}>
+                <a
+                  href={cert.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between gap-6 py-6"
                 >
-                  <div
-                    className={`shrink-0 rounded-xl p-3 w-fit ${
-                      isAward
-                        ? "bg-amber-400/10 text-amber-300"
-                        : "bg-violet-400/10 text-violet-300"
-                    }`}
-                  >
-                    {isAward ? (
-                      <Trophy className="h-6 w-6" />
-                    ) : (
-                      <Award className="h-6 w-6" />
-                    )}
-                  </div>
-
-                  <div className="flex-1 mt-4 md:mt-0">
-                    <div className="flex items-start justify-between gap-3">
-                      <h3
-                        className={`font-display font-bold text-white leading-snug mb-2 ${
-                          isAward ? "text-xl md:text-2xl" : "text-base"
-                        }`}
-                      >
-                        {cert.name}
-                      </h3>
-                      {cert.link && (
-                        <ExternalLink className="h-4 w-4 text-white/30 group-hover:text-fuchsia-400 transition-colors shrink-0 mt-1" />
-                      )}
-                    </div>
-                    <p className="text-xs uppercase tracking-[0.18em] text-white/40 mb-3">
-                      {cert.issuer} — {cert.issueDate}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {cert.skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className="text-[10px] font-medium uppercase tracking-[0.1em] text-white/45 border border-white/10 rounded-full px-2.5 py-0.5"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </Wrapper>
-              </motion.div>
-            );
-          })}
-        </div>
+                  <span>
+                    <span className="block text-lg text-ink transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-1">
+                      {cert.name}
+                    </span>
+                    <span className="mt-1 block text-sm text-dim">
+                      {cert.issuer} · {cert.issueDate}
+                    </span>
+                  </span>
+                  <ArrowUpRight className="h-5 w-5 shrink-0 text-dim transition-all duration-500 ease-[var(--ease-out-expo)] group-hover:rotate-45 group-hover:text-ink" />
+                </a>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

@@ -1,127 +1,148 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { lenisRef } from "@/app/lib/scrollBus";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { CONTACT_INFO } from "@/app/constants";
+import { scrollToTarget } from "@/app/lib/scroll";
+import { easeOut } from "./Reveal";
 
-const navigation = [
+const LINKS = [
+  { name: "Work", href: "#projects" },
   { name: "About", href: "#about" },
   { name: "Experience", href: "#experience" },
-  { name: "Work", href: "#projects" },
-  { name: "Certs", href: "#certificates" },
+  { name: "Contact", href: "#contact" },
 ];
 
+/** "rp." that opens into "roman princ." under the pointer. */
+function Wordmark() {
+  const part = "inline-block max-w-0 overflow-hidden align-bottom whitespace-pre transition-[max-width] duration-500 ease-[var(--ease-out-expo)] group-hover:max-w-[5ch] group-focus-visible:max-w-[5ch]";
+  return (
+    <button
+      onClick={() => scrollToTarget(0)}
+      aria-label="Roman Princ, back to the top"
+      className="group text-[17px] font-semibold tracking-[-0.03em] text-ink"
+    >
+      r<span className={part}>oman </span>p<span className={part}>rinc</span>.
+    </button>
+  );
+}
+
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState<string | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollToSection = (href: string) => {
-    setIsOpen(false);
-    setTimeout(() => {
-      const lenis = lenisRef.current;
-      if (lenis) {
-        lenis.scrollTo(href, { offset: -72 });
-        return;
-      }
-      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-    }, 200);
-  };
+  useEffect(() => {
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
-  const scrollToTop = () => {
-    const lenis = lenisRef.current;
-    if (lenis) lenis.scrollTo(0);
-    else window.scrollTo({ top: 0, behavior: "smooth" });
+  const go = (href: string) => {
+    setOpen(false);
+    setTimeout(() => scrollToTarget(href), open ? 350 : 0);
   };
 
   return (
-    <motion.nav
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-      className="fixed top-4 inset-x-0 z-50 px-4"
-    >
-      <div
-        className={`max-w-3xl mx-auto rounded-2xl px-4 sm:px-6 transition-all duration-500 ${
-          isScrolled || isOpen
-            ? "bg-[#0b0618]/70 backdrop-blur-apple border border-white/10 shadow-lg shadow-purple-950/30"
-            : "bg-transparent border border-transparent"
+    <>
+      <motion.header
+        initial={{ y: -24, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: easeOut, delay: 0.1 }}
+        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
+          scrolled && !open ? "bg-black/70 backdrop-blur-xl backdrop-saturate-150 border-b border-line" : "border-b border-transparent"
         }`}
       >
-        <div className="flex items-center justify-between h-14">
-          <button
-            onClick={scrollToTop}
-            className="font-display font-bold text-lg tracking-tight text-white hover:text-gradient-neon transition-colors"
-          >
-            rp<span className="text-fuchsia-400">.</span>
-          </button>
+        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8" aria-label="Sections">
+          <Wordmark />
 
-          <div className="hidden md:flex items-center gap-7">
-            {navigation.map((item) => (
+          <div className="hidden md:flex items-center gap-1" onMouseLeave={() => setHovered(null)}>
+            {LINKS.slice(0, 3).map((link) => (
               <button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                className="text-[13px] font-medium uppercase tracking-[0.18em] text-white/60 hover:text-white transition-colors"
+                key={link.href}
+                onClick={() => go(link.href)}
+                onMouseEnter={() => setHovered(link.href)}
+                className="relative isolate px-4 py-2 text-sm text-muted transition-colors hover:text-ink"
               >
-                {item.name}
+                {hovered === link.href && (
+                  <motion.span
+                    layoutId="nav-hover"
+                    className="absolute inset-0 -z-10 rounded-full bg-white/[0.08]"
+                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                  />
+                )}
+                {link.name}
               </button>
             ))}
-          </div>
-
-          <div className="flex items-center gap-2">
             <button
-              onClick={() => scrollToSection("#contact")}
-              className="hidden md:inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[13px] font-semibold uppercase tracking-[0.14em] text-white bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 transition-all shadow-lg shadow-fuchsia-900/40"
+              onClick={() => go("#contact")}
+              className="ml-3 rounded-full bg-white px-4 py-2 text-sm font-medium text-black transition-transform duration-300 hover:scale-[1.04] active:scale-95"
             >
-              Hire me
-            </button>
-
-            <button
-              className="md:hidden p-2 text-white/80 hover:text-white"
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              Let&apos;s talk
             </button>
           </div>
-        </div>
 
-        <AnimatePresence>
-          {isOpen && (
+          <button
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? "Close the menu" : "Open the menu"}
+            aria-expanded={open}
+            className="md:hidden relative -mr-2 grid h-10 w-10 place-items-center"
+          >
+            <span className={`absolute h-[1.5px] w-5 bg-ink transition-transform duration-500 ease-[var(--ease-out-expo)] ${open ? "rotate-45" : "-translate-y-[4px]"}`} />
+            <span className={`absolute h-[1.5px] w-5 bg-ink transition-transform duration-500 ease-[var(--ease-out-expo)] ${open ? "-rotate-45" : "translate-y-[4px]"}`} />
+          </button>
+        </nav>
+      </motion.header>
+
+      {/* a phone: the menu fills the screen, its links big */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 flex flex-col justify-between bg-black px-5 pt-28 pb-10 md:hidden"
+          >
+            <ul className="space-y-2">
+              {LINKS.map((link, i) => (
+                <li key={link.href} className="overflow-hidden">
+                  <motion.button
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "100%" }}
+                    transition={{ duration: 0.6, ease: easeOut, delay: 0.05 + i * 0.05 }}
+                    onClick={() => go(link.href)}
+                    className="display block text-[3.25rem] leading-[1.1] text-ink active:text-muted"
+                  >
+                    {link.name}
+                  </motion.button>
+                </li>
+              ))}
+            </ul>
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:hidden overflow-hidden"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: easeOut, delay: 0.3 }}
+              className="space-y-1 text-muted"
             >
-              <div className="py-3 space-y-1 border-t border-white/10">
-                {[...navigation, { name: "Contact", href: "#contact" }].map(
-                  (item, index) => (
-                    <motion.button
-                      key={item.name}
-                      initial={{ opacity: 0, x: -16 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -16 }}
-                      transition={{ duration: 0.2, delay: index * 0.06 }}
-                      onClick={() => scrollToSection(item.href)}
-                      className="block w-full text-left px-3 py-2.5 text-sm uppercase tracking-[0.18em] text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                    >
-                      {item.name}
-                    </motion.button>
-                  )
-                )}
+              <a href={`mailto:${CONTACT_INFO.email}`} className="block text-ink">{CONTACT_INFO.email}</a>
+              <div className="flex gap-5">
+                <a href={CONTACT_INFO.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href={CONTACT_INFO.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

@@ -1,20 +1,16 @@
 import type { Metadata } from "next";
-import { Syne, Space_Grotesk } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/common/Navigation";
 import SmoothScroll from "./components/common/SmoothScroll";
 
-const syne = Syne({
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-  variable: "--font-syne",
+// SF Pro comes with Apple's systems and can't be served to others: they get Inter, its closest match. Not preloaded,
+// so an Apple device never downloads it.
+const inter = Inter({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-inter",
   display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-grotesk",
-  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -209,14 +205,14 @@ export default function RootLayout({
       lang="en"
       itemScope
       itemType="https://schema.org/WebPage"
-      className={`dark ${syne.variable} ${spaceGrotesk.variable}`}
+      className={inter.variable}
     >
       <head>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
-        <meta name="theme-color" content="#0b0618" />
+        <meta name="theme-color" content="#000000" />
         <meta name="color-scheme" content="dark" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link
@@ -246,10 +242,11 @@ export default function RootLayout({
           src="https://analytics.princdev.com/script.js"
           data-website-id="987c635e-4251-4bf2-9db7-8736002863b8"></script>
       </head>
-      <body className="font-sf-pro antialiased noise">
-        <div className="aurora fixed inset-0 -z-10" aria-hidden />
-        <Navigation />
-        <SmoothScroll>{children}</SmoothScroll>
+      <body>
+        <SmoothScroll>
+          <Navigation />
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );
