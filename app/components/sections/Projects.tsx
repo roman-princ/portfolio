@@ -82,7 +82,7 @@ export default function Projects() {
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-white/10 hover:bg-gradient-to-r hover:from-violet-600 hover:to-fuchsia-600 rounded-full px-5 py-2.5 transition-all"
                         >
-                          Live project
+                          {new URL(project.demo).hostname.replace(/^www\./, "")}
                           <ArrowUpRight className="h-4 w-4" />
                         </a>
                       )}

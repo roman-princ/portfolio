@@ -56,6 +56,25 @@ export const SKILLS: Skill[] = [
 
 export const PROJECTS: Project[] = [
   {
+    id: "project-10",
+    title: "Wingman — Flight Price Tracker",
+    description:
+      "Flight price tracker that keeps searching Google Flights for your routes and pings your phone when a fare drops or a faster flight appears. Tries every departure day of flexible months and weekends, joins self-transfers through a hub, totals round trips in 29 currencies and tells you whether to buy or wait. Web app with push notifications in ten languages, a native iPhone app on the way.",
+    technologies: [
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "React",
+      "TypeScript",
+      "Web Push",
+      "SwiftUI",
+      "Docker",
+    ],
+    github: "",
+    demo: "https://wingmanfares.com",
+    featured: true,
+  },
+  {
     id: "project-9",
     title: "Powderline — Browser Snowboarding Game",
     description:

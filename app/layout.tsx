@@ -185,8 +185,21 @@ export default function RootLayout({
         about: { "@id": "https://portfolio.princdev.com/#person" },
         mainEntity: { "@id": "https://portfolio.princdev.com/#person" },
         dateCreated: "2025-06-01T00:00:00+02:00",
-        dateModified: "2026-07-26T00:00:00+02:00",
+        dateModified: "2026-10-19T00:00:00+02:00",
         inLanguage: "en",
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://wingmanfares.com/#app",
+        name: "Wingman",
+        alternateName: "Wingman — Flight Price Tracker",
+        description:
+          "Flight price tracker that keeps searching Google Flights for your routes and dates and pings your phone when a fare drops or a faster flight appears.",
+        url: "https://wingmanfares.com",
+        applicationCategory: "TravelApplication",
+        operatingSystem: "Web, iOS",
+        author: { "@id": "https://portfolio.princdev.com/#person" },
+        creator: { "@id": "https://portfolio.princdev.com/#person" },
       },
     ],
   };
