@@ -57,6 +57,7 @@ export const SKILLS: Skill[] = [
 export const PROJECTS: Project[] = [
   {
     id: "project-10",
+    slug: "wingman",
     title: "Wingman — Flight Price Tracker",
     description:
       "Flight price tracker that keeps searching Google Flights for your routes and pings your phone when a fare drops or a faster flight appears. Tries every departure day of flexible months and weekends, joins self-transfers through a hub, totals round trips in 29 currencies and tells you whether to buy or wait. Web app with push notifications in ten languages, a native iPhone app on the way.",
@@ -73,9 +74,30 @@ export const PROJECTS: Project[] = [
     github: "",
     demo: "https://wingmanfares.com",
     featured: true,
+    year: "2026",
+    role: "Design, backend, web and iOS",
+    highlights: [
+      "Searches Google Flights again and again for every date you give it, and keeps two records per route: the cheapest trip and the fastest door to door.",
+      "Flexible months and weekends: it tries every departure day and keeps the best round trip.",
+      "Self-transfers: joins two separate low-cost flights through a hub, often the cheapest way there.",
+      "Tells you whether to buy or wait, from the prices it has seen.",
+      "Notifications straight to your phone with Web Push, no app to install. Email works too.",
+      "A native iPhone app with every route on a 3D globe, on its way.",
+    ],
+    mac: {
+      kind: "image",
+      src: "/work/wingman/mac.webp",
+      alt: "The Wingman dashboard: five routes being watched, the best round trip at 196 €, round-trip totals and a table of every route",
+    },
+    phones: [
+      { src: "/work/wingman/phone-globe.webp", alt: "The iPhone app: every watched route as an arc on a 3D globe, with its price on it" },
+      { src: "/work/wingman/phone-route.webp", alt: "Prague to Bangkok on the globe: the cheapest trip via Istanbul and the fastest via Doha" },
+      { src: "/work/wingman/phone-web.webp", alt: "The web app on a phone: a trip to Bangkok with its cheapest round trip at 740 €" },
+    ],
   },
   {
     id: "project-9",
+    slug: "powderline",
     title: "Powderline — Browser Snowboarding Game",
     description:
       "Endless alpine snowboarding game running entirely in the browser. Terrain, trees, rider and audio are all procedurally generated — no assets to load. Features trick physics with graded landings, rails and kickers, 1v1 multiplayer races, quests, a shop and online leaderboards.",
@@ -90,10 +112,20 @@ export const PROJECTS: Project[] = [
     github: "",
     demo: "https://powderlinegame.com",
     featured: true,
+    year: "2026",
+    highlights: [
+      "An endless mountain, generated as you ride: the terrain, the trees, the rider and even the audio, with no assets to download.",
+      "Trick physics with graded landings, rails, kickers and boosters.",
+      "1v1 races against a friend, quests, a shop and online leaderboards.",
+      "Plays with a keyboard, a gamepad or touch, free in the browser.",
+    ],
+    mac: { kind: "image", src: "/work/powderline/mac.webp", alt: "Powderline's home page: a rider carving the procedural mountain under the gondolas" },
+    phones: [{ src: "/work/powderline/phone.webp", alt: "Powderline on a phone", statusBar: true }],
   },
 
   {
     id: "project-2",
+    slug: "chester-iot",
     title: "CHESTER IoT Management App",
     description:
       "React Native mobile application for managing IoT gateways. Built from scratch with cross-platform support for Android and iOS. Award-winning project that placed 5th nationally in SOČ competition.",
@@ -107,29 +139,69 @@ export const PROJECTS: Project[] = [
     github: "",
     demo: "https://apps.apple.com/cz/app/statotest/id6479359279?l=cs",
     featured: false,
+    year: "2022–2023",
+    role: "Mobile developer at Statotest",
+    highlights: [
+      "Manages CHESTER IoT gateways in the field: sensor measurements, configuration and firmware updates.",
+      "Low-level communication with the devices, and a REST API behind it all.",
+      "One React Native codebase for Android and iOS, built from scratch.",
+      "Placed 5th nationally at the SOČ competition.",
+    ],
+    phones: [
+      { src: "/work/chester/phone-device.webp", alt: "A measurement point's device: its serial number, Bluetooth details and actions" },
+      { src: "/work/chester/phone-data.webp", alt: "Measured data: temperature, humidity and tilt over time, as charts" },
+      { src: "/work/chester/phone-export.webp", alt: "Exporting measured data as CSV, JSON, Excel or PDF" },
+    ],
   },
   {
     id: "project-4",
+    slug: "image-editor",
     title: "Image Editor with Fourier Transform",
     description:
       "CLI-controlled graphics editor utilizing Fourier Transform for fast filter application. Advanced mathematical algorithms implementation.",
-    technologies: ["Python", "Fourier Transform", "Image Processing", "CLI"],
+    technologies: ["Python", "NumPy", "SciPy", "Fourier Transform", "Image Processing", "CLI"],
     github: "",
     demo: "https://github.com/roman-princ/cli-image-editor",
     featured: false,
+    year: "2024",
+    highlights: [
+      "Filters run as convolutions through the Fourier transform (SciPy's fftconvolve), fast on large images.",
+      "Sobel–Feldman and Roberts cross edge detection, sharpening and blur.",
+      "Rotate, mirror, grayscale, negative, lighten and darken, chained in a single command.",
+      "Tested with pytest.",
+    ],
+    mac: {
+      kind: "terminal",
+      title: "editor — zsh",
+      prompt: "editor %",
+      lines: [
+        { cmd: "python main.py --rotate 90 input.jpg output.jpg", out: "Image saved successfully to output.jpg" },
+        { cmd: "python main.py --bw --lighten 25 input.jpg output.jpg", out: "Image saved successfully to output.jpg" },
+        { cmd: "python main.py --sharpen --darken 10 input.jpg output.jpg", out: "Image saved successfully to output.jpg" },
+        { cmd: "python main.py --ed input.jpg edges.jpg", out: "Image saved successfully to edges.jpg" },
+      ],
+    },
   },
   {
     id: "project-5",
+    slug: "spotify-stats",
     title: "Spotify Statistics Web App",
     description:
       "Personal Spotify statistics viewer with data visualization and user insights.",
-    technologies: ["React", "Spotify API", "Data Visualization"],
+    technologies: ["Next.js", "TypeScript", "Express", "PostgreSQL", "Spotify API", "Data Visualization"],
     github: "",
     demo: "https://spotiappv2.princdev.com",
     featured: true,
+    highlights: [
+      "Sign in with Spotify to see your top tracks and artists.",
+      "Analyzes your listening history, and takes the full history file from Spotify's privacy download for a view across the years.",
+      "A Next.js front end on a TypeScript and Express API, the history kept in PostgreSQL through Prisma.",
+    ],
+    mac: { kind: "image", src: "/work/spotify/mac.webp", alt: "SpotiApp's start: connect with Spotify to see your stats" },
   },
   {
     id: "project-6",
+    slug: "excel-engine",
     title: "Excel Engine in C++",
     description:
       "High-performance Excel processing engine built from scratch in C++.",
@@ -137,8 +209,12 @@ export const PROJECTS: Project[] = [
     github: "https://github.com/roman-princ/cpp-excel",
     demo: "",
     featured: true,
+    mac: { kind: "spreadsheet" },
   },
 ];
+
+// the work in the order it's shown, on the home page and from one project's page to the next: the featured first
+export const WORK: Project[] = [...PROJECTS.filter((p) => p.featured), ...PROJECTS.filter((p) => !p.featured)];
 
 export const EXPERIENCE: Experience[] = [
   {

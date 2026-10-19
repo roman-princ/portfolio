@@ -6,31 +6,9 @@ import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { CONTACT_INFO, PERSONAL_INFO } from "@/app/constants";
 import { scrollToTarget } from "@/app/lib/scroll";
 import { easeOut } from "../common/Reveal";
+import { Letters } from "../common/Letters";
 
 const BUILDS = ["web apps", "mobile apps", "backends", "whole products"];
-
-/** A word, its letters rising in one after another, each one hopping when the pointer touches it. */
-function Letters({ text, delay = 0 }: { text: string; delay?: number }) {
-  return (
-    // the padding above (taken back by the margin) is room for a letter's hop inside the mask it rises through
-    <span className="-mt-[0.2em] block overflow-hidden pb-[0.06em] pt-[0.2em]" aria-label={text}>
-      {[...text].map((ch, i) => (
-        <motion.span
-          key={i}
-          aria-hidden="true"
-          className="inline-block will-change-transform"
-          initial={{ y: "105%" }}
-          animate={{ y: 0 }}
-          transition={{ duration: 1, ease: easeOut, delay: delay + i * 0.045 }}
-          whileHover={{ y: "-0.14em", rotate: i % 2 ? 7 : -7, transition: { type: "spring", stiffness: 500, damping: 12 } }}
-          whileTap={{ scale: 0.92 }}
-        >
-          {ch}
-        </motion.span>
-      ))}
-    </span>
-  );
-}
 
 /** "14:32", Prague's time now, its colon ticking. */
 function PragueTime() {

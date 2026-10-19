@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname, useRouter } from "next/navigation";
 import { CONTACT_INFO } from "@/app/constants";
 import { scrollToTarget } from "@/app/lib/scroll";
 import { easeOut } from "./Reveal";
@@ -13,13 +14,13 @@ const LINKS = [
   { name: "Contact", href: "#contact" },
 ];
 
-/** "rp." that opens into "roman princ." under the pointer. */
-function Wordmark() {
+/** "rp." that opens into "roman princ." under the pointer; the way home, or to its top. */
+function Wordmark({ onClick }: { onClick: () => void }) {
   const part = "inline-block max-w-0 overflow-hidden align-bottom whitespace-pre transition-[max-width] duration-500 ease-[var(--ease-out-expo)] group-hover:max-w-[5ch] group-focus-visible:max-w-[5ch]";
   return (
     <button
-      onClick={() => scrollToTarget(0)}
-      aria-label="Roman Princ, back to the top"
+      onClick={onClick}
+      aria-label="Roman Princ, home"
       className="group text-[17px] font-semibold tracking-[-0.03em] text-ink"
     >
       r<span className={part}>oman </span>p<span className={part}>rinc</span>.
@@ -46,8 +47,13 @@ export default function Navigation() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  // on the home page a link glides to its section; on a project's page it goes home, to that section
+  const pathname = usePathname();
+  const router = useRouter();
+  const home = pathname === "/";
   const go = (href: string) => {
     setOpen(false);
+    if (!home) return router.push(`/${href}`);
     setTimeout(() => scrollToTarget(href), open ? 350 : 0);
   };
 
@@ -62,7 +68,7 @@ export default function Navigation() {
         }`}
       >
         <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8" aria-label="Sections">
-          <Wordmark />
+          <Wordmark onClick={() => (home ? scrollToTarget(0) : router.push("/"))} />
 
           <div className="hidden md:flex items-center gap-1" onMouseLeave={() => setHovered(null)}>
             {LINKS.slice(0, 3).map((link) => (

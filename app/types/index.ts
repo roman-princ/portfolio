@@ -1,5 +1,19 @@
+/** What a laptop's screen shows on a project's page: a screenshot, a terminal running the project's own commands,
+ *  or a spreadsheet drawn in the page (an illustration, for a project with no screen of its own). */
+export type MacScreen =
+  | { kind: "image"; src: string; alt: string }
+  | { kind: "terminal"; title: string; prompt: string; lines: { cmd: string; out: string }[] }
+  | { kind: "spreadsheet" };
+
+export interface PhoneScreen {
+  src: string;
+  alt: string;
+  statusBar?: boolean; // a web page captured without the phone's status bar: the frame draws one above it
+}
+
 export interface Project {
   id: string;
+  slug: string; // its page: /work/<slug>
   title: string;
   description: string;
   technologies: string[];
@@ -7,6 +21,11 @@ export interface Project {
   demo?: string;
   image?: string;
   featured: boolean;
+  year?: string;
+  role?: string;
+  highlights?: string[];
+  mac?: MacScreen;
+  phones?: PhoneScreen[];
 }
 
 export interface Skill {
