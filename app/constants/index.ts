@@ -246,6 +246,27 @@ export const EXPERIENCE: Experience[] = [
     ],
   },
   {
+    id: "exp-5",
+    company: "Trueslav s.r.o. (Freelance)",
+    position: "Software Engineer",
+    period: "February 2025 - Present",
+    current: true,
+    description: [
+      "Working mainly on projects using TypeScript, GraphQL and React",
+      "Developing a kiosk application for a client",
+      "Looking forward what the future holds",
+    ],
+    technologies: [
+      "TypeScript",
+      "GraphQL",
+      "React",
+      "Next.js",
+      "Tailwind CSS",
+      "PostgreSQL",
+      "Docker",
+    ],
+  },
+  {
     id: "exp-1",
     company: "FreshPoint s.r.o. (Freelance)",
     position: "Full Stack Developer",
